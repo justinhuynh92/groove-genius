@@ -14,11 +14,9 @@ tasks for this week.
 
 ## Deliverables
 
-- [ ] Wire-frame diagrams
+- [x] Wire-frame diagrams
 - [ ] API documentation
-- [ ] Project is deployed to Caprover (BE, DB) & GitLab-pages (FE)
-- [ ] GitLab issue board is setup and in use (or project management tool of choice)
-- [ ] Journals
+- [x] GitLab issue board is setup and in use
 
 ## Project layout
 
@@ -117,11 +115,11 @@ but you can figure it out yourself from your GitLab project URL.
 
 If this is your project URL
 
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
+<https://gitlab.com/JDCT1/groove-genius>
 
 then your GitLab pages URL will be
 
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
+<https://JDCT1.gitlab.io/groove-genius>
 
 ### Initialize CapRover
 
@@ -139,3 +137,110 @@ in GitLab.
 Merge a change into main to kick off the initial deploy. Once the build pipeline
 finishes you should be able to see an "under construction" page on your GitLab
 pages site.
+
+### API Endpoints
+
+### User
+
+#### Sign Up / Create user
+
+- Endpoint path: /token
+- Endpoint method: POST
+
+- Request shape (form):
+
+  - username: string
+  - password: string
+  - picture_url: string
+
+- Response: Response will be the account info, status and a token.
+- Response shape (JSON):
+
+  ```json
+  {
+    "account": {
+      "username": "Grandmaster Flash",
+      "password": "password",
+      "picture_url": "url"
+    },
+    "token": "token",
+    "status": "status"
+  }
+  ```
+
+#### Log In
+
+- Endpoint path: /user
+- Endpoint method: GET
+- Query parameters:
+
+  - username: Match username in database
+  - password: Match password in database
+
+- Headers:
+
+  - Authentication: Bearer Token
+
+- Request shape (form):
+
+  - username: string
+  - password: string
+
+- Response: Response will be the account info and a token.
+- Response shape (JSON):
+
+  ```json
+  {
+    "account": {
+      "username": "Grandmaster Flash",
+      "password": "password",
+      "picture_url": "url"
+    },
+    "token": "token"
+  }
+  ```
+
+#### Log out
+
+- Endpoint path: /token
+- Endpoint method: DELETE
+
+- Headers:
+
+  - Authorization: Bearer token
+
+- Response: True, since there's nothing to return.
+- Response shape (JSON):
+
+  ```json
+  true
+  ```
+
+### Playlist
+
+#### Create Playlist
+
+- Endpoint path: /playlists
+- Endpoint method: POST
+
+- Request shape:
+
+```json
+  {
+    "name": "
+ }
+```
+
+- Response: Response will be status and playlist info.
+- Response shape (JSON):
+
+  ```json
+  {
+    "playlist": {
+      "name": "Grandmaster Flash",
+      "password": "password",
+      "picture_url": "url"
+    },
+    "token": "token"
+  }
+  ```
