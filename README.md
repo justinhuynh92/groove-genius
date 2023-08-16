@@ -170,7 +170,7 @@ pages site.
 
 #### Log In
 
-- Endpoint path: /user
+- Endpoint path: /user/{id}
 - Endpoint method: GET
 - Query parameters:
 
@@ -213,8 +213,25 @@ pages site.
 - Response shape (JSON):
 
   ```json
-  true
+  {
+    "true": true
+  }
   ```
+
+### Edit User
+
+- Endpoint path: /user/{id}
+- Endpoint method: PUT
+
+- Request shape:
+
+```json
+{
+  "name": "Super Grandmaster Flash"
+}
+```
+
+- Response: Response will be a status indicating whether it was successful or not.
 
 ### Playlist
 
@@ -226,9 +243,11 @@ pages site.
 - Request shape:
 
 ```json
-  {
-    "name": "
- }
+{
+  "user_id": user_id,
+  "name": "Mixtape Supreme",
+  "description": "Like a meal for your soul."
+}
 ```
 
 - Response: Response will be status and playlist info.
@@ -237,10 +256,109 @@ pages site.
   ```json
   {
     "playlist": {
-      "name": "Grandmaster Flash",
-      "password": "password",
-      "picture_url": "url"
+      "user_id": user_id,
+      "name": "Mixtape Supreme",
+      "description": "Like a meal for your soul.",
     },
-    "token": "token"
+    "status": status
   }
   ```
+
+#### Edit Playlist
+
+- Endpoint path: /playlist/{id}
+- Endpoint method: PUT
+
+- Request shape:
+
+```json
+{
+  "name": "Super Mixtape Supreme"
+}
+```
+
+- Response: Response will be a status indicating whether it was successful or not.
+
+#### Delete Playlist
+
+- Endpoint path: /playlist/{id}
+- Endpoint method: DELETE
+
+- Response will be the status, since there's nothing to return.
+- Response shape:
+
+```json
+{
+  "true": true
+}
+```
+
+### Track
+
+#### Create Track
+
+- Endpoint path: /tracks
+- Endpoint method: POST
+
+- Request shape:
+
+```json
+{
+  "title": "Jump",
+  "artist": "Van Halen",
+  "genre_id": genre_id,
+  "album": "1984"
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "track": {
+    "title": "Jump",
+    "artist": "Van Halen",
+    "genre_name": "Rock/Pop",
+    "album": "1984"
+  },
+  {
+    "status": status
+  }
+}
+```
+
+#### Edit Track
+
+- Endpoint path: /track/{id}
+- Endpoint method: PUT
+
+- Request shape:
+
+```json
+{
+  "title": "Jump!"
+}
+```
+
+- Response: Response will be new info and success/failure status.
+- Response shape(JSON):
+
+```json
+{
+  "track": {
+  "title": "Jump!"
+  },
+  {
+    "status": status
+  }
+}
+```
+
+#### Delete Track
+
+#### Create Genre
+
+#### Edit Genre
+
+#### Delete Genre
