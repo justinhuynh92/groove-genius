@@ -170,7 +170,7 @@ pages site.
 
 #### Log In
 
-- Endpoint path: /user/{id}
+- Endpoint path: /users/{id}
 - Endpoint method: GET
 - Query parameters:
 
@@ -220,7 +220,7 @@ pages site.
 
 ### Edit User
 
-- Endpoint path: /user/{id}
+- Endpoint path: /users/{id}
 - Endpoint method: PUT
 
 - Request shape:
@@ -234,6 +234,54 @@ pages site.
 - Response: Response will be a status indicating whether it was successful or not.
 
 ### Playlist
+
+#### Get Playlist List
+
+- Endpoint path: /playlists
+- Endpoint method: GET
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "playlists": {
+    {
+      "id": id,
+      "name": "Mixtape Supreme",
+      "description": "Like a meal for your soul"
+    },
+    {
+      "id": id,
+      "name": "Playlist 2",
+      "description": "Like a meal for your soul"
+    },
+  }
+  },
+  {
+    "status": status
+  }
+```
+
+#### Get Playlist by ID
+
+- Endpoint path: /playlists/{id}
+- Endpoint method: GET
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "name": "Mixtape Supreme",
+  "description": "Like a meal for your soul.",
+  "id": id
+  },
+  {
+    "status": status
+  }
+```
+
 
 #### Create Playlist
 
@@ -266,7 +314,7 @@ pages site.
 
 #### Edit Playlist
 
-- Endpoint path: /playlist/{id}
+- Endpoint path: /playlists/{id}
 - Endpoint method: PUT
 
 - Request shape:
@@ -281,7 +329,7 @@ pages site.
 
 #### Delete Playlist
 
-- Endpoint path: /playlist/{id}
+- Endpoint path: /playlists/{id}
 - Endpoint method: DELETE
 
 - Response will be the status, since there's nothing to return.
@@ -294,6 +342,70 @@ pages site.
 ```
 
 ### Track
+
+#### Get Track List
+
+- Endpoint path: /tracks
+- Endpoint method: GET
+
+- Request shape:
+
+```json
+
+{
+  "title": "Jump",
+  "artist": "Van Halen",
+  "genre_id": genre_id,
+  "album": "1984"
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "title": "Jump",
+  "artist": "Van Halen",
+  "genre_id": genre_id,
+  "album": "1984"
+  },
+  {
+    "status": status
+  }
+```
+
+#### Get Track by ID
+
+- Endpoint path: /tracks/{id}
+- Endpoint method: GET
+
+- Request shape:
+
+```json
+{
+  "title": "Jump",
+  "artist": "Van Halen",
+  "genre_id": genre_id,
+  "album": "1984"
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "title": "Jump",
+  "artist": "Van Halen",
+  "genre_id": genre_id,
+  "album": "1984",
+  "id": id
+  },
+  {
+    "status": status
+  }
+```
 
 #### Create Track
 
@@ -330,7 +442,7 @@ pages site.
 
 #### Edit Track
 
-- Endpoint path: /track/{id}
+- Endpoint path: /tracks/{id}
 - Endpoint method: PUT
 
 - Request shape:
@@ -357,8 +469,187 @@ pages site.
 
 #### Delete Track
 
+- Endpoint path: /tracks/{id}
+- Endpoint method: DELETE
+
+- Response will be the status, since there's nothing to return.
+- Response shape:
+
+```json
+{
+  "true": true
+}
+```
+
+### Genre
+
+#### Get Genre List
+
+- Endpoint path: /genres
+- Endpoint method: GET
+
+- Request shape:
+
+```json
+{
+  "name": "Rock/Pop"
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "name": "Rock/Pop"
+  },
+  {
+    "status": status
+  }
+```
+
+#### Get Genre by ID
+
+- Endpoint path: /genres/{id}
+- Endpoint method: GET
+
+- Request shape:
+
+```json
+{
+  "name": "Rock/Pop"
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "name": "Rock/Pop",
+  "id": id
+  },
+  {
+    "status": status
+  }
+```
+
 #### Create Genre
+
+- Endpoint path: /genres
+- Endpoint method: POST
+
+- Request shape:
+
+```json
+{
+  "id": 1,
+  "name": "Rock/Pop",
+}
+```
+
+- Response: Response will be the track info and status of request.
+- Response shape (JSON):
+
+```json
+{
+  "name": "Rock/Pop"
+  },
+  {
+    "status": status
+  }
+```
 
 #### Edit Genre
 
+- Endpoint path: /genres/{id}
+- Endpoint method: PUT
+
+- Request shape:
+
+```json
+{
+  "name": "Rock/Pop"
+}
+```
+
+- Response: Response will be new info and success/failure status.
+- Response shape(JSON):
+
+```json
+{
+  "name": "Rock/Pop"
+  },
+  {
+    "status": status
+  }
+```
+
 #### Delete Genre
+
+- Endpoint path: /genres/{id}
+- Endpoint method: DELETE
+
+- Response will be the status, since there's nothing to return.
+- Response shape:
+
+```json
+{
+  "true": true
+}
+```
+
+### Recommendations
+
+#### Get Previous Recommendations
+
+- Endpoint path: /recommendations
+- Endpoint method: GET
+
+- Response will be the id, genres, track id
+- Response shape:
+
+```json
+{
+  "recommendations": {
+    "id": id,
+    "genre": "genre",
+    "track_id": track_id
+    },
+    {
+    "id": id,
+    "genre": "genre",
+    "track_id": track_id
+    },
+}
+```
+
+#### Get Recommendation
+
+- Endpoint path: /recommendations/{id}
+- Endpoint method: GET
+
+- Response will be the id, genres, track id
+- Response shape:
+
+```json
+{
+  "id": id,
+  "genre": "genre",
+  "track_id": track_id
+}
+```
+
+#### Delete Recommendation
+
+- Endpoint path: /recommendations/{id}
+- Endpoint method: DELETE
+
+- Response will be the status, since there's nothing to return.
+- Response shape:
+
+```json
+{
+  "true": true
+}
+```
