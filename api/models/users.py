@@ -8,3 +8,6 @@ class UserIn(BaseModel):
 class UserOut(BaseModel):
     userId: str
     username: str
+
+class UserOutWithPassword(UserOut):
+    hashed_password: str
