@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import users, genres, tracks
+from routers import users, genres, tracks, playlists
 
 app = FastAPI()
 app.include_router(users.router)
 app.include_router(tracks.router)
 app.include_router(genres.router)
+app.include_router(playlists.router)
 
 app.add_middleware(
     CORSMiddleware,

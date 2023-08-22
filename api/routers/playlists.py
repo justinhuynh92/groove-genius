@@ -10,7 +10,7 @@ from models.playlists import Playlist, PlaylistOut
 router = APIRouter()
 
 
-@router.post("/playlists", response_model=List[PlaylistOut])
+@router.post("/playlists", response_model=PlaylistOut)
 async def create_playlist(
     playlist: Playlist, playlist_repo: PlaylistRepository = Depends()
 ):

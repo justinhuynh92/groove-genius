@@ -7,5 +7,5 @@ class Playlist(BaseModel):
 
 
 class PlaylistOut(Playlist):
-    id: int
     name: str
+    user_id: int
