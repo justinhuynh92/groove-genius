@@ -4,8 +4,12 @@ class Track(BaseModel):
     title: str
     artist: str
     album: str
-    genre_id: int
+    genre_id: list[int]
 
-class TrackOut(Track):
+class TrackOut(BaseModel):
     id:int
     title: str
+    artist: str
+    album: str
+    genre_id: list[int]
+
