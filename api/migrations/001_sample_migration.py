@@ -18,7 +18,7 @@ steps = [
             title VARCHAR(20) NOT NULL,
             artist VARCHAR(20) NOT NULL,
             album VARCHAR(30) NOT NULL,
-            genre_id INT NOT NULL
+            genre_id INT[] NOT NULL
         );
 
         CREATE TABLE playlists (
