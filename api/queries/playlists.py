@@ -13,10 +13,12 @@ class PlaylistRepository:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
+
                         INSERT INTO playlists
                         (name, user_id)
                         VALUES (%s, %s)
                         RETURNING name, user_id;
+                        
                         """,
                         (
                             playlist.name,
@@ -26,4 +28,23 @@ class PlaylistRepository:
                     id = cur.fetchone()[0]
                     return id
         except Exception:
-            return {"message": "Could not create playlist"}
+            return {"message": "Could not create playlist."}
+
+    def get_playlists(self, user_id: int) -> List[Playlist]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        SELECT name, user_id
+                        FROM playlists
+                        WHERE user_id = %s;
+
+                        """,
+                        (user_id,),
+                    )
+                    playlists = cur.fetchall()
+                    return playlists
+        except Exception:
+            return {"message": "Could not get playlists."}
