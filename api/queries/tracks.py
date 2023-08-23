@@ -98,3 +98,26 @@ class TrackRepository:
                         return None
         except Exception:
             return {"message": "Could not retrieve track"}
+        
+    def delete_track(self, track_id: int):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM track_genres
+                    WHERE track_id = %s;
+                    """,
+                    (track_id,),
+                )
+
+                cur.execute(
+                    """
+                    DELETE FROM tracks
+                    WHERE id = %s;
+                    """,
+                    (track_id,),
+                )
+
+                deletion_successful = cur.rowcount > 0
+
+        return deletion_successful

@@ -22,3 +22,13 @@ async def get_track_by_id(track_id: int, track_repo: TrackRepository = Depends()
     if track is None:
         raise HTTPException(status_code=404, detail="Track not found")
     return track
+
+@router.delete("/tracks/{track_id}", response_model=dict)
+async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
+    deletion_successful = track_repo.delete_track(track_id)
+    
+    if deletion_successful:
+        return {"message": "Track deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Track not found")
+    
