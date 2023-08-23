@@ -27,3 +27,14 @@ class GenreList:
                     return results
         except Exception:
             return {"message": "Could not retreive data"}
+
+    def delete_genre(self, genre_id: int) -> None:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE from Genres
+                    WHERE id = %;
+                    """
+                    [genre_id],
+                )
