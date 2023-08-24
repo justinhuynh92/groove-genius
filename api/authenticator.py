@@ -10,7 +10,7 @@ class MyAuthenticator(Authenticator):
         self,
         username: str,
         accounts: UserRepository,
-    ):
+    ) -> UserOutWithPassword:
         return accounts.get(username)
 
     def get_account_getter(
@@ -23,7 +23,7 @@ class MyAuthenticator(Authenticator):
         return account.hashed_password
 
     def get_account_data_for_cookie(self, account: UserOut):
-        return account.username, UserOut(**account.dict())
+        return account.username, UserOutWithPassword(**account.dict())
 
 
 authenticator = MyAuthenticator(os.environ["SIGNING_KEY"])

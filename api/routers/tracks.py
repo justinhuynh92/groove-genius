@@ -7,12 +7,13 @@ from typing import List
 from pydantic import BaseModel
 from queries.tracks import TrackRepository
 from models.tracks import Track, TrackOut
+from authenticator import authenticator
 
 router = APIRouter()
 
 
 @router.post("/tracks", response_model=TrackOut)
-async def create_track(track: Track, track_repo: TrackRepository = Depends()):
+async def create_track(track: Track, track_repo: TrackRepository = Depends(), account_data: dict = Depends(authenticator.get_current_account_data),):
     created_track = track_repo.create_track(track)
     return created_track
 
