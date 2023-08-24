@@ -13,3 +13,10 @@ class TrackOut(BaseModel):
     album: str
     genre_id: list[int]
 
+class TrackUpdate(BaseModel):
+    id:int
+    title: str
+    artist: str
+    album: str
+    genre_id: list[int]
+
