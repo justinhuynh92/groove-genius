@@ -122,7 +122,7 @@ class TrackRepository:
 
         return deletion_successful
 
-    def update_tracks(self, track_id: int, track: TrackUpdate) -> TrackOut:
+    def update_track(self, track_id: int, track: Track) -> TrackUpdate:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -143,7 +143,10 @@ class TrackRepository:
                             track_id,
                         )
                     )
+                    row = cur.fetchone()
                     account_data = track.dict()
-                    return TrackUpdate(**account_data)
+                    if row:
+                        response=(TrackUpdate(**account_data))
+                        return response
         except Exception:
             return {"message": "Could not update track"}

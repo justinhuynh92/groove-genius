@@ -33,7 +33,7 @@ async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
     else:
         raise HTTPException(status_code=404, detail="Track not found")
 
-@router.put("/tracks/{track_id}", response_model=TrackUpdate)
+@router.put("/tracks/{track_id}", response_model=dict)
 async def update_track(
     track_id: int,
     track: TrackUpdate,
