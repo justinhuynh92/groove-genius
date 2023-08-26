@@ -28,6 +28,7 @@ services:
 
   fastapi:
     environment:
+      SIGNING_KEY: z52146a78741f7d30214a418d791cedc34e920787cde1687a6e31115745452cb
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       CORS_HOST: http://localhost:3000
     build:

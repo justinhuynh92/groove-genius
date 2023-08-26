@@ -33,8 +33,16 @@ class GenreList:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    DELETE from Genres
-                    WHERE id = %;
+                    DELETE FROM track_genres
+                    WHERE genre_id = %s;
+                    """,
+                    (genre_id,),
+                )
+
+                cur.execute(
                     """
-                    [genre_id],
+                    DELETE FROM genres
+                    WHERE id = %s;
+                    """,
+                    (genre_id,),
                 )

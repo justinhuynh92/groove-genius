@@ -1,28 +1,51 @@
-from typing import List
+from typing import List, Union
 import os
 from psycopg_pool import ConnectionPool
-from models.users import UserIn, UserOut
+from models.users import UserIn, UserOut, UserOutWithPassword
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class UserRepository:
-    def get_all(self) -> List[UserOut]:
+    def get(self, username: str) -> Union[UserOutWithPassword, None]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        SELECT *
+                        SELECT id, username, password
                         FROM users
-                        """
+                        WHERE username = %s;
+                        """,
+                        [username],
                     )
-                    results = []
-                    for record in cur:
-                        user = UserOut(
-                            userId=record[0], username=record[1]
+                    ac = cur.fetchone()
+                    if ac is None:
+                        raise Exception("No account found")
+                    else:
+                        return UserOutWithPassword(
+                            userId=ac[0],
+                            username=ac[1],
+                            hashed_password=ac[2]
                         )
-                        results.append(user)
-                    return results
         except Exception:
-            return {"message": "Could not get all accounts"}
+            return None
+    def create_user(self, account: UserIn, hashed_password: str) -> UserOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO users
+                    (username, password)
+                    VALUES (%s, %s)
+                    RETURNING ID;
+                    """,
+                    (
+                        account.username,
+                        hashed_password,
+                    ),
+                )
+                id = cur.fetchone()[0]
+                data = account.dict()
+                return UserOutWithPassword(userId=id, **data, hashed_password=hashed_password)
+    
