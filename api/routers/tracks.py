@@ -6,7 +6,7 @@ from fastapi import (
 from typing import List
 from pydantic import BaseModel
 from queries.tracks import TrackRepository
-from models.tracks import Track, TrackOut
+from models.tracks import Track, TrackOut, TrackUpdate
 from authenticator import authenticator
 
 router = APIRouter()
@@ -27,9 +27,21 @@ async def get_track_by_id(track_id: int, track_repo: TrackRepository = Depends()
 @router.delete("/tracks/{track_id}", response_model=dict)
 async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
     deletion_successful = track_repo.delete_track(track_id)
-    
+
     if deletion_successful:
         return {"message": "Track deleted successfully"}
     else:
         raise HTTPException(status_code=404, detail="Track not found")
-    
+
+@router.put("/tracks/{track_id}", response_model=dict)
+async def update_track(
+    track_id: int,
+    track: TrackUpdate,
+    track_repo: TrackRepository = Depends(), account_data: dict = Depends(authenticator.get_current_account_data),
+) -> TrackOut:
+    response = track_repo.update_tracks(track_id, track)
+
+    if response:
+        return {"message": "Track updated successfully"}
+    else:
+        raise HTTPException(status_code = 400, detail="Track can't update")
