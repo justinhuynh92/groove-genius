@@ -1,13 +1,14 @@
 from typing import List
 import os
 from psycopg_pool import ConnectionPool
-from models.playlists import Playlist
+from models.playlists import Playlist, PlaylistWithTracks, NewPlaylist
+from models.tracks import Track
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class PlaylistRepository:
-    def create_playlist(self, playlist: Playlist) -> int:
+    def create_playlist(self, playlist: NewPlaylist) -> int:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -48,3 +49,40 @@ class PlaylistRepository:
                     return playlists
         except Exception:
             return {"message": "Could not get playlists."}
+
+    def get_playlist_with_tracks(self, playlist_id: int) -> PlaylistWithTracks:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        SELECT p.name AS playlist_name, t.*
+                        FROM playlists p
+                        JOIN playlist_tracks pt ON p.id = pt.playlist_id
+                        JOIN tracks t ON pt.track_id = t.id
+                        WHERE p.id = %s;
+                        
+                        """,
+                        (playlist_id,),
+                    )
+                    rows = cur.fetchall()
+                    if rows:
+                        playlist_name = rows[0][0]
+                        tracks = [
+                            Track(
+                                id=row[1],
+                                title=row[2],
+                                artist=row[3],
+                                album=row[4],
+                                genre_id=row[5],
+                            )
+                            for row in rows
+                        ]
+                        return PlaylistWithTracks(
+                            id=playlist_id, name=playlist_name, tracks=tracks
+                        )
+                    else:
+                        return None
+        except Exception:
+            return {"message": "Could not get playlist."}
