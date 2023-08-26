@@ -19,4 +19,3 @@ class TrackUpdate(BaseModel):
     artist: str
     album: str
     genre_id: list[int]
-

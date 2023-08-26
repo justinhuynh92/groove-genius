@@ -20,9 +20,6 @@ function Signup() {
     const value = e.target.value;
     setPassword(value);
   };
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {};
@@ -45,3 +42,38 @@ function Signup() {
       navigate("/login");
     }
   };
+
+return (
+  <div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h1>Sign Up!</h1>
+        <div>
+            <input type="text" value={username} onChange={handleNameChange} />
+          <label>
+            Username:
+          </label>
+          <br />
+        </div>
+        <div>
+            <input type="text" value={first_name} onChange={handleEmailChange} />
+          <label>
+            Email:
+          </label>
+          <br />
+        </div>
+        <div>
+            <input type="password" value={password} onChange={handlePasswordChange} />
+          <label>
+            Password:
+          </label>
+          <br />
+        </div>
+        <button type="submit">Sign Up!</button>
+      </form>
+    </div>
+  </div>
+);
+}
+
+export default Signup;

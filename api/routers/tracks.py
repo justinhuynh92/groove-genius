@@ -33,13 +33,13 @@ async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
     else:
         raise HTTPException(status_code=404, detail="Track not found")
 
-@router.put("/tracks/{track_id}", response_model=TrackUpdate)
+@router.put("/tracks/{track_id}", response_model=dict)
 async def update_track(
     track_id: int,
     track: TrackUpdate,
-    track_repo: TrackRepository = Depends(),
+    track_repo: TrackRepository = Depends(), account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> TrackOut:
-    response = track_repo.update_track(track_id, track)
+    response = track_repo.update_tracks(track_id, track)
 
     if response:
         return {"message": "Track updated successfully"}
