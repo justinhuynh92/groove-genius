@@ -64,3 +64,25 @@ class GenreRepository:
                     """,
                     (genre_id,),
                 )
+
+    def genre_by_id(self, id: int) -> dict:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id, name
+                        FROM Genres
+                        WHERE id = %s;
+                        """,
+                        (id,),
+                    )
+                    genre_by_id = cur.fetchone()
+                    if genre_by_id:
+                        response = {
+                            "id": genre_by_id[0],
+                            "name": genre_by_id[1],
+                        }
+                    return response
+        except Exception:
+            return {"message": "Could not retrieve data"}
