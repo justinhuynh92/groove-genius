@@ -86,3 +86,23 @@ class GenreRepository:
                     return response
         except Exception:
             return {"message": "Could not retrieve data"}
+
+    def update_genre(self, id: int, genre: Genres) -> dict:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE genres
+                        SET name = %s
+                        WHERE id = %s;
+                        """,
+                        (
+                            genre.name,
+                            id,
+                        ),
+                    )
+                    genre_data = genre.dict()
+                    return Genres(**genre_data)
+        except Exception:
+            return {"message": "Could not change fields"}
