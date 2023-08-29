@@ -7,11 +7,10 @@ from pydantic import BaseModel
 from authenticator import authenticator
 from queries.playlists import PlaylistRepository
 from models.playlists import (
-    Playlist,
     PlaylistOut,
     PlaylistWithTracksOut,
-    PlaylistWithTracks,
     NewPlaylist,
+    PlaylistTrackLink,
 )
 
 router = APIRouter()
@@ -45,3 +44,15 @@ async def get_playlist_with_tracks(
     # account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.get_playlist_with_tracks(playlist_id)
+
+
+@router.post(
+    "/playlists/{playlist_id}/tracks", response_model=PlaylistTrackLink
+)
+async def add_track_to_playlist(
+    playlist_id: int,
+    track_id: int,
+    playlist_repo: PlaylistRepository = Depends(),
+    # account_data=Depends(authenticator.get_current_account_data),
+):
+    return playlist_repo.add_track_to_playlist(playlist_id, track_id)

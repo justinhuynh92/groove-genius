@@ -1,5 +1,5 @@
 from typing import List, Optional
-from models.tracks import Track, TrackOut
+from models.tracks import Track
 from pydantic import BaseModel
 
 
@@ -8,14 +8,14 @@ class NewPlaylist(BaseModel):
 
 
 class PlaylistWithTracks(BaseModel):
-    id: int
     name: str
-    tracks: Optional[List[TrackOut]] = None
+    tracks: Optional[List[Track]] = None
 
 
 class PlaylistWithTracksOut(PlaylistWithTracks):
+    id: int
     name: str
-    tracks: Optional[List[TrackOut]] = None
+    tracks: Optional[List[Track]] = None
 
 
 class Playlist(BaseModel):
@@ -24,5 +24,11 @@ class Playlist(BaseModel):
 
 
 class PlaylistOut(Playlist):
+    id: int
     name: str
     track_count: Optional[int] = None
+
+
+class PlaylistTrackLink(BaseModel):
+    playlist_id: int
+    track_id: int

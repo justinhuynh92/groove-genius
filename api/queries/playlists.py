@@ -1,7 +1,12 @@
 from typing import List, Optional
 import os
 from psycopg_pool import ConnectionPool
-from models.playlists import Playlist, PlaylistWithTracks, NewPlaylist
+from models.playlists import (
+    Playlist,
+    PlaylistWithTracksOut,
+    NewPlaylist,
+    PlaylistTrackLink,
+)
 from models.tracks import Track
 from fastapi import HTTPException
 
@@ -53,7 +58,7 @@ class PlaylistRepository:
 
     def get_playlist_with_tracks(
         self, playlist_id: int
-    ) -> Optional[PlaylistWithTracks]:
+    ) -> Optional[PlaylistWithTracksOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -95,10 +100,40 @@ class PlaylistRepository:
                         )
                         for row in rows
                     ]
-                    return PlaylistWithTracks(
+                    return PlaylistWithTracksOut(
                         id=playlist_id,
                         name=playlist_name,
                         tracks=tracks if tracks else None,
                     )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    def add_track_to_playlist(
+        self, playlist_id: int, track_id: int
+    ) -> PlaylistTrackLink:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        INSERT INTO playlist_tracks
+                        (playlist_id, track_id)
+                        VALUES (%s, %s)
+                        RETURNING playlist_id, track_id;
+                        
+                        """,
+                        (playlist_id, track_id),
+                    )
+                    row = cur.fetchone()
+                    if not row:
+                        return None
+                    else:
+                        return PlaylistTrackLink(
+                            playlist_id=row[0],
+                            track_id=row[1],
+                        )
         except Exception:
-            raise HTTPException(status_code=404, detail="Playlist not found.")
+            raise HTTPException(
+                status_code=400, detail="Unable to add track to playlist."
+            )
