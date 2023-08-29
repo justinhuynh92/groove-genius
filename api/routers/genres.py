@@ -32,7 +32,7 @@ async def genre_by_id(id: int, genre_repo: GenreRepository = Depends()):
 async def create_genre(
     genre: Genres,
     genre_repo: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     created_genre = genre_repo.create_genre(genre)
     return {"id": created_genre, **genre.dict()}
@@ -42,7 +42,7 @@ async def create_genre(
 async def delete_genre(
     genre_id: int,
     queries: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     queries.delete_genre(genre_id)
     return True
@@ -53,7 +53,7 @@ async def update_genre(
     id: int,
     genre: Genres,
     genre_repo: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     response = genre_repo.update_genre(id, genre)
     if response is None:
