@@ -54,7 +54,34 @@ class PlaylistRepository:
                     columns = [desc[0] for desc in cur.description]
                     return [dict(zip(columns, row)) for row in playlists]
         except Exception:
-            raise HTTPException(status_code=404, detail="Playlists not found.")
+            raise HTTPException(status_code=404, detail="No playlists found.")
+
+    def delete_playlist(self, playlist_id: int) -> Playlist:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        DELETE FROM playlists
+                        WHERE id = %s
+                        RETURNING *;
+
+                        """,
+                        (playlist_id,),
+                    )
+                    row = cur.fetchone()
+                    if not row:
+                        return None
+                    else:
+                        return Playlist(
+                            id=row[0],
+                            name=row[1],
+                        )
+        except Exception:
+            raise HTTPException(
+                status_code=400, detail="Unable to delete playlist."
+            )
 
     def get_playlist_with_tracks(
         self, playlist_id: int
@@ -64,11 +91,11 @@ class PlaylistRepository:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-    
+
                         SELECT p.name AS playlist_name
                         FROM playlists p
                         WHERE p.id = %s;
-                        
+
                         """,
                         (playlist_id,),
                     )
@@ -79,13 +106,13 @@ class PlaylistRepository:
 
                     cur.execute(
                         """
-    
+
                         SELECT t.*
                         FROM playlists p
                         JOIN playlist_tracks pt ON p.id = pt.playlist_id
                         JOIN tracks t ON pt.track_id = t.id
                         WHERE p.id = %s;
-                        
+
                         """,
                         (playlist_id,),
                     )
@@ -121,7 +148,7 @@ class PlaylistRepository:
                         (playlist_id, track_id)
                         VALUES (%s, %s)
                         RETURNING playlist_id, track_id;
-                        
+
                         """,
                         (playlist_id, track_id),
                     )
