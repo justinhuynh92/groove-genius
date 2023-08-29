@@ -137,3 +137,32 @@ class PlaylistRepository:
             raise HTTPException(
                 status_code=400, detail="Unable to add track to playlist."
             )
+
+    def delete_track_from_playlist(
+        self, playlist_id: int, track_id: int
+    ) -> PlaylistTrackLink:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        DELETE FROM playlist_tracks
+                        WHERE playlist_id = %s AND track_id = %s
+                        RETURNING playlist_id, track_id;
+                        
+                        """,
+                        (playlist_id, track_id),
+                    )
+                    row = cur.fetchone()
+                    if not row:
+                        return None
+                    else:
+                        return PlaylistTrackLink(
+                            playlist_id=row[0],
+                            track_id=row[1],
+                        )
+        except Exception:
+            raise HTTPException(
+                status_code=400, detail="Unable to delete track from playlist."
+            )
