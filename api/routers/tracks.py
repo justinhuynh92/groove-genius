@@ -13,16 +13,23 @@ router = APIRouter()
 
 
 @router.post("/tracks", response_model=TrackOut)
-async def create_track(track: Track, track_repo: TrackRepository = Depends(), account_data: dict = Depends(authenticator.get_current_account_data),):
+async def create_track(
+    track: Track,
+    track_repo: TrackRepository = Depends(),
+):
     created_track = track_repo.create_track(track)
     return created_track
 
+
 @router.get("/tracks/{track_id}", response_model=dict)
-async def get_track_by_id(track_id: int, track_repo: TrackRepository = Depends()):
+async def get_track_by_id(
+    track_id: int, track_repo: TrackRepository = Depends()
+):
     track = track_repo.get_track_by_id(track_id)
     if track is None:
         raise HTTPException(status_code=404, detail="Track not found")
     return track
+
 
 @router.delete("/tracks/{track_id}", response_model=dict)
 async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
@@ -33,15 +40,17 @@ async def delete_track(track_id: int, track_repo: TrackRepository = Depends()):
     else:
         raise HTTPException(status_code=404, detail="Track not found")
 
+
 @router.put("/tracks/{track_id}", response_model=dict)
 async def update_track(
     track_id: int,
     track: TrackUpdate,
-    track_repo: TrackRepository = Depends(), account_data: dict = Depends(authenticator.get_current_account_data),
+    track_repo: TrackRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> TrackOut:
     response = track_repo.update_tracks(track_id, track)
 
     if response:
         return {"message": "Track updated successfully"}
     else:
-        raise HTTPException(status_code = 400, detail="Track can't update")
+        raise HTTPException(status_code=400, detail="Track can't update")

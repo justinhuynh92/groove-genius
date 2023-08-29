@@ -2,7 +2,7 @@ from typing import List, Optional
 import os
 from psycopg_pool import ConnectionPool
 from models.playlists import (
-    Playlist,
+    PlaylistOut,
     PlaylistWithTracksOut,
     NewPlaylist,
     PlaylistTrackLink,
@@ -36,25 +36,44 @@ class PlaylistRepository:
                 status_code=400, detail="Cannot create playlist."
             )
 
-    def get_playlists(
-        self,
-    ) -> List[Playlist]:
+    def get_playlists(self) -> List[PlaylistOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT p.id, p.name, COUNT(pt.track_id) AS track_count
+                        FROM playlists p
+                        LEFT JOIN playlist_tracks pt ON p.id = pt.playlist_id
+                        GROUP BY p.id, p.name;
+                        """
+                    )
+                    rows = cur.fetchall()
+                    return [
+                        PlaylistOut(id=row[0], name=row[1], track_count=row[2])
+                        for row in rows
+                    ]
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    def delete_playlist(self, playlist_id: int) -> dict:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
 
-                        SELECT *
-                        FROM playlists
-
-                        """
+                        DELETE FROM playlists
+                        WHERE id = %s;
+                        
+                        """,
+                        (playlist_id,),
                     )
-                    playlists = cur.fetchall()
-                    columns = [desc[0] for desc in cur.description]
-                    return [dict(zip(columns, row)) for row in playlists]
+                    return {"message": "Playlist deleted."}
         except Exception:
-            raise HTTPException(status_code=404, detail="Playlists not found.")
+            raise HTTPException(
+                status_code=400, detail="Unable to delete playlist."
+            )
 
     def get_playlist_with_tracks(
         self, playlist_id: int
@@ -64,11 +83,11 @@ class PlaylistRepository:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-    
+
                         SELECT p.name AS playlist_name
                         FROM playlists p
                         WHERE p.id = %s;
-                        
+
                         """,
                         (playlist_id,),
                     )
@@ -121,6 +140,7 @@ class PlaylistRepository:
                         (playlist_id, track_id)
                         VALUES (%s, %s)
                         RETURNING playlist_id, track_id;
+
                         
                         """,
                         (playlist_id, track_id),
@@ -136,4 +156,33 @@ class PlaylistRepository:
         except Exception:
             raise HTTPException(
                 status_code=400, detail="Unable to add track to playlist."
+            )
+
+    def delete_track_from_playlist(
+        self, playlist_id: int, track_id: int
+    ) -> PlaylistTrackLink:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        DELETE FROM playlist_tracks
+                        WHERE playlist_id = %s AND track_id = %s
+                        RETURNING playlist_id, track_id;
+                        
+                        """,
+                        (playlist_id, track_id),
+                    )
+                    row = cur.fetchone()
+                    if not row:
+                        return None
+                    else:
+                        return PlaylistTrackLink(
+                            playlist_id=row[0],
+                            track_id=row[1],
+                        )
+        except Exception:
+            raise HTTPException(
+                status_code=400, detail="Unable to delete track from playlist."
             )

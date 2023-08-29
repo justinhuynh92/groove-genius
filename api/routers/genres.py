@@ -32,7 +32,6 @@ async def genre_by_id(id: int, genre_repo: GenreRepository = Depends()):
 async def create_genre(
     genre: Genres,
     genre_repo: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     created_genre = genre_repo.create_genre(genre)
     return {"id": created_genre, **genre.dict()}

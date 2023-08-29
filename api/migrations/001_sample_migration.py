@@ -33,7 +33,7 @@ steps = [
         );
 
         CREATE TABLE playlist_tracks (
-        playlist_id INT NOT NULL REFERENCES playlists(id),
+        playlist_id INT NOT NULL REFERENCES playlists(id) ON DELETE CASCADE,
         track_id INT NOT NULL REFERENCES tracks(id),
         PRIMARY KEY (playlist_id, track_id)
         );
