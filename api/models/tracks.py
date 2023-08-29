@@ -14,7 +14,6 @@ class TrackOut(BaseModel):
     genre_id: list[int]
 
 class TrackUpdate(BaseModel):
-    id:int
     title: str
     artist: str
     album: str

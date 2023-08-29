@@ -106,13 +106,13 @@ class PlaylistRepository:
 
                     cur.execute(
                         """
-
+    
                         SELECT t.*
                         FROM playlists p
                         JOIN playlist_tracks pt ON p.id = pt.playlist_id
                         JOIN tracks t ON pt.track_id = t.id
                         WHERE p.id = %s;
-
+                        
                         """,
                         (playlist_id,),
                     )
@@ -149,6 +149,7 @@ class PlaylistRepository:
                         VALUES (%s, %s)
                         RETURNING playlist_id, track_id;
 
+                        
                         """,
                         (playlist_id, track_id),
                     )

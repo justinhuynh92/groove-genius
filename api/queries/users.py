@@ -1,7 +1,7 @@
 from typing import List, Union
 import os
 from psycopg_pool import ConnectionPool
-from models.users import UserIn, UserOut, UserOutWithPassword
+from models.users import UserIn, UserOut, UserOutWithPassword, User
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
@@ -49,3 +49,36 @@ class UserRepository:
                 data = account.dict()
                 return UserOutWithPassword(userId=id, **data, hashed_password=hashed_password)
     
+    def delete_user(self, pk: int):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM users
+                    WHERE id = %s
+                    RETURNING *;
+                    """,
+                    (pk,),
+                )
+                id = cur.fetchone()
+                return id
+    
+    def update_user(self, id: int, user: User) -> dict:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE users
+                        SET username = %s
+                        WHERE id = %s;
+                        """,
+                        (
+                            user.username,
+                            id,
+                        ),
+                    )
+                    user_data = user.dict()
+                    return user_data
+        except Exception:
+            return {"message": "Could not change fields"}
