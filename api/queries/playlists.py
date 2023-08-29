@@ -56,6 +56,25 @@ class PlaylistRepository:
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
+    def delete_playlist(self, playlist_id: int) -> dict:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        DELETE FROM playlists
+                        WHERE id = %s;
+                        
+                        """,
+                        (playlist_id,),
+                    )
+                    return {"message": "Playlist deleted."}
+        except Exception:
+            raise HTTPException(
+                status_code=400, detail="Unable to delete playlist."
+            )
+
     def get_playlist_with_tracks(
         self, playlist_id: int
     ) -> Optional[PlaylistWithTracksOut]:
