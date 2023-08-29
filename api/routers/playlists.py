@@ -58,7 +58,7 @@ async def add_track_to_playlist(
     return playlist_repo.add_track_to_playlist(playlist_id, track_id)
 
 
-@router.delete("/playlists/{playlist_id}", response_model=PlaylistOut)
+@router.delete("/playlists/{playlist_id}", response_model=dict)
 async def delete_playlist(
     playlist_id: int,
     playlist_repo: PlaylistRepository = Depends(),
