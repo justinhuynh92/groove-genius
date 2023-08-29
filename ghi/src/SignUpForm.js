@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-function Signup() {
+
+function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,14 +49,14 @@ return (
       <form onSubmit={handleSubmit}>
         <h1>Sign Up!</h1>
         <div>
-            <input type="text" value={username} onChange={handleNameChange} />
+            <input type="text" value={name} onChange={handleNameChange} />
           <label>
             Username:
           </label>
           <br />
         </div>
         <div>
-            <input type="text" value={first_name} onChange={handleEmailChange} />
+            <input type="text" value={email} onChange={handleEmailChange} />
           <label>
             Email:
           </label>
@@ -76,4 +76,4 @@ return (
 );
 }
 
-export default Signup;
+export default SignupForm;
