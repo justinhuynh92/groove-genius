@@ -1,39 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-const Login = () => {
+
+function LoginForm() {
+  const { login } = useToken();
+  const [username, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleUserNameChange = (e) => {
+    const value = e.target.value;
+    setUserName(value);
+  }
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  }
+
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [checker, setChecker] = useState(false);
-  const [invalid, setInvalid] = useState(false);
-const { login } = useToken();
-  const handleInvalid = () => {
-    setInvalid(true);
-  };
-  const handleChecker = () => {
-    setChecker(!checker);
-  };
-  const fetchUser = async () => {
-    const url = `${baseURL}/token`;
-    const response = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-    });
-    if (response.ok) {
-      const data = await response.json();
-      if (data === null) {
-        handleInvalid();
-      } else {
-        navigate("/");
-      }
-    }
-  };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await login(username, password);
-    fetchUser();
-  };
-  useEffect(() => {
-    login(username, password);
-  }, [checker, login, username, password]);
+      e.preventDefault()
+      await login(username, password)
+      navigate("/loggedin");
+    }
+
+  return (
+  <div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h1>Log In</h1>
+        <div>
+            <input type="text" value={username} onChange={handleUserNameChange} />
+          <label>
+            Username:
+          </label>
+          <br />
+        </div>
+        <div>
+            <input type="password" value={password} onChange={handlePasswordChange} />
+          <label>
+            Password:
+          </label>
+          <br />
+        </div>
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+);
+}
+
+export default LoginForm;
