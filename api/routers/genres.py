@@ -1,7 +1,7 @@
 from fastapi import (
     Depends,
     APIRouter,
-    HTTPException,
+    # HTTPException,
 )
 from typing import List
 from pydantic import BaseModel
