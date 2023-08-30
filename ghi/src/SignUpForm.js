@@ -3,18 +3,13 @@ import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function SignupForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const handleNameChange = (e) => {
+  const handleUserNameChange = (e) => {
     const value = e.target.value;
-    setName(value);
-  };
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
+    setUserName(value);
   };
   const handlePasswordChange = (e) => {
     const value = e.target.value;
@@ -23,10 +18,9 @@ function SignupForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {};
-    data.name = name;
-    data.email = email;
+    data.username = username;
     data.password = password;
-    const userUrl = `${process.env.REACT_APP_USER_SERVICE_API_HOST}/api/users`;
+    const userUrl = `http://localhost:8000/users`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),
@@ -36,8 +30,7 @@ function SignupForm() {
     };
     const response = await fetch(userUrl, fetchConfig);
     if (response.ok) {
-      setName("");
-      setEmail("");
+      setUserName("");
       setPassword("");
       navigate("/login");
     }
@@ -49,16 +42,9 @@ return (
       <form onSubmit={handleSubmit}>
         <h1>Sign Up!</h1>
         <div>
-            <input type="text" value={name} onChange={handleNameChange} />
+            <input type="text" value={username} onChange={handleUserNameChange} />
           <label>
             Username:
-          </label>
-          <br />
-        </div>
-        <div>
-            <input type="text" value={email} onChange={handleEmailChange} />
-          <label>
-            Email:
           </label>
           <br />
         </div>

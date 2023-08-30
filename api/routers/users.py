@@ -46,7 +46,7 @@ async def delete_user(id: int, user_repo: UserRepository = Depends()):
         return {"message": "User deleted successfully"}
     else:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
 @router.put("/users/{id}", response_model=dict)
 async def update_user(
     id: int,
@@ -58,3 +58,8 @@ async def update_user(
     if response is None:
         return {"message": "Could not change user"}
     return response
+
+@router.get("/token")
+async def get_by_cookie(request: Request, account_data: dict = Depends(authenticator.get_current_account_data)
+) -> AccountToken:
+    return {"access_token": request.cookies[authenticator.cookie_name], "type": "Bearer", "account": account_data}

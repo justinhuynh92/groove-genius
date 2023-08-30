@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 
 function GenreList() {
   const [genre, setGenre] = useState([]);
-
   async function getGenre() {
-    const response = await fetch("http://localhost:8000/genres");
+    const response = await fetch("http://localhost:8000/genres")
+;
     if (response.ok) {
       const data = await response.json();
       setGenre(data);
