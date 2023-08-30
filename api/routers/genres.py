@@ -28,7 +28,7 @@ async def genre_by_id(id: int, genre_repo: GenreRepository = Depends()):
     return id_genre
 
 
-@router.post("/genres", response_model=dict)
+@router.post("/genres/new", response_model=dict)
 async def create_genre(
     genre: Genres,
     genre_repo: GenreRepository = Depends(),
