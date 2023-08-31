@@ -1,4 +1,3 @@
-from typing import List
 import os
 from psycopg_pool import ConnectionPool
 from models.tracks import Track, TrackOut, TrackUpdate

@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Union
 import os
 from psycopg_pool import ConnectionPool
 from models.users import UserIn, UserOutWithPassword, User
