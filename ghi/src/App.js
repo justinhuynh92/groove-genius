@@ -8,6 +8,8 @@ import GenreList from "./genres/ListOfGenres.js";
 import GenreForm from "./genres/CreateGenreForm.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import Nav from './Nav.js';
+
 
 function App() {
   // const domain = /https:\/\/[^/]+/;
@@ -16,6 +18,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+      <Nav />
         <AuthProvider baseUrl={'http://localhost:8000'}>
           <Routes>
             <Route path="/login" element={<LoginForm />} />
