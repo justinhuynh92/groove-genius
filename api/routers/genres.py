@@ -4,7 +4,8 @@ from fastapi import (
     # HTTPException,
 )
 from typing import List
-from pydantic import BaseModel
+
+# from pydantic import BaseModel
 from queries.genres import GenreRepository
 from models.genres import Genres, GenreOut
 from authenticator import authenticator

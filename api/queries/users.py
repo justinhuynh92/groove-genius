@@ -1,7 +1,7 @@
 from typing import List, Union
 import os
 from psycopg_pool import ConnectionPool
-from models.users import UserIn, UserOut, UserOutWithPassword, User
+from models.users import UserIn, UserOutWithPassword, User
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
@@ -24,13 +24,14 @@ class UserRepository:
                         raise Exception("No account found")
                     else:
                         return UserOutWithPassword(
-                            userId=ac[0],
-                            username=ac[1],
-                            hashed_password=ac[2]
+                            userId=ac[0], username=ac[1], hashed_password=ac[2]
                         )
         except Exception:
             return None
-    def create_user(self, account: UserIn, hashed_password: str) -> UserOutWithPassword:
+
+    def create_user(
+        self, account: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -47,8 +48,10 @@ class UserRepository:
                 )
                 id = cur.fetchone()[0]
                 data = account.dict()
-                return UserOutWithPassword(userId=id, **data, hashed_password=hashed_password)
-    
+                return UserOutWithPassword(
+                    userId=id, **data, hashed_password=hashed_password
+                )
+
     def delete_user(self, pk: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -62,7 +65,7 @@ class UserRepository:
                 )
                 id = cur.fetchone()
                 return id
-    
+
     def update_user(self, id: int, user: User) -> dict:
         try:
             with pool.connection() as conn:

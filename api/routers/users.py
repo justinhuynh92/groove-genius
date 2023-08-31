@@ -1,7 +1,7 @@
 from fastapi import (
     Depends,
     HTTPException,
-    status,
+    # status,
     Response,
     APIRouter,
     Request,
@@ -10,17 +10,21 @@ from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
 from queries.users import UserRepository
-from models.users import UserIn, UserOut, UserOutWithPassword, User
+from models.users import UserIn, UserOut, User
+
 
 class AccountForm(BaseModel):
     username: str
     password: str
 
+
 class AccountToken(Token):
     account: UserOut
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 router = APIRouter()
 
@@ -38,6 +42,7 @@ async def create_account(
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
 
+
 @router.delete("/users/{id}", response_model=UserOut)
 async def delete_user(id: int, user_repo: UserRepository = Depends()):
     deletion_successful = user_repo.delete_user(id)
@@ -46,6 +51,7 @@ async def delete_user(id: int, user_repo: UserRepository = Depends()):
         return {"message": "User deleted successfully"}
     else:
         raise HTTPException(status_code=404, detail="User not found")
+
 
 @router.put("/users/{id}", response_model=dict)
 async def update_user(
@@ -59,7 +65,14 @@ async def update_user(
         return {"message": "Could not change user"}
     return response
 
+
 @router.get("/token")
-async def get_by_cookie(request: Request, account_data: dict = Depends(authenticator.get_current_account_data)
+async def get_by_cookie(
+    request: Request,
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> AccountToken:
-    return {"access_token": request.cookies[authenticator.cookie_name], "type": "Bearer", "account": account_data}
+    return {
+        "access_token": request.cookies[authenticator.cookie_name],
+        "type": "Bearer",
+        "account": account_data,
+    }
