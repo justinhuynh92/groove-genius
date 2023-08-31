@@ -3,8 +3,8 @@ from fastapi import (
     APIRouter,
     HTTPException,
 )
-from typing import List
-from pydantic import BaseModel
+
+# from pydantic import BaseModel
 from queries.tracks import TrackRepository
 from models.tracks import Track, TrackOut, TrackUpdate
 from authenticator import authenticator

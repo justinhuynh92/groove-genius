@@ -20,8 +20,7 @@ function LoginForm() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
       e.preventDefault()
-      await login(username, password)
-      navigate("/loggedin");
+      const response = await login(username, password)
     }
 
   return (

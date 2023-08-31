@@ -1,10 +1,11 @@
 from fastapi import (
     Depends,
     APIRouter,
-    HTTPException,
+    # HTTPException,
 )
 from typing import List
-from pydantic import BaseModel
+
+# from pydantic import BaseModel
 from queries.genres import GenreRepository
 from models.genres import Genres, GenreOut
 from authenticator import authenticator
@@ -15,7 +16,7 @@ router = APIRouter()
 @router.get("/genres", response_model=List[GenreOut])
 async def get_genres(
     genre: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
+    # account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return genre.get_all()
 
@@ -28,7 +29,7 @@ async def genre_by_id(id: int, genre_repo: GenreRepository = Depends()):
     return id_genre
 
 
-@router.post("/genres", response_model=dict)
+@router.post("/genres/new", response_model=dict)
 async def create_genre(
     genre: Genres,
     genre_repo: GenreRepository = Depends(),

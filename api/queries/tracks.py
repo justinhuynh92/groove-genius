@@ -1,4 +1,3 @@
-from typing import List
 import os
 from psycopg_pool import ConnectionPool
 from models.tracks import Track, TrackOut, TrackUpdate
@@ -27,12 +26,12 @@ class TrackRepository:
                     )
                     id = cur.fetchone()[0]
                     created_track = TrackOut(
-                    id=id,
-                    title=track.title,
-                    artist=track.artist,
-                    album=track.album,
-                    genre_id=track.genre_id
-                )
+                        id=id,
+                        title=track.title,
+                        artist=track.artist,
+                        album=track.album,
+                        genre_id=track.genre_id,
+                    )
 
                 return created_track
         except Exception:
@@ -61,7 +60,7 @@ class TrackRepository:
                                 FROM track_genres
                                 WHERE track_id = %s AND genre_id = %s;
                                 """,
-                                (track_id, genre_id)
+                                (track_id, genre_id),
                             )
                             association_exists = cur.fetchone()
                             if not association_exists:
@@ -70,7 +69,7 @@ class TrackRepository:
                                     INSERT INTO track_genres (track_id, genre_id)
                                     VALUES (%s, %s);
                                     """,
-                                    (track_id, genre_id)
+                                    (track_id, genre_id),
                                 )
 
                     cur.execute(
@@ -91,7 +90,7 @@ class TrackRepository:
                             "title": row[1],
                             "artist": row[2],
                             "album": row[3],
-                            "genre_names": row[5]
+                            "genre_names": row[5],
                         }
                         return response
                     else:
@@ -141,7 +140,7 @@ class TrackRepository:
                             track.album,
                             track.genre_id,
                             track_id,
-                        )
+                        ),
                     )
                     account_data = track.dict()
                     return TrackUpdate(**account_data)
