@@ -29,7 +29,7 @@ async def create_playlist(
 @router.get("/playlists", response_model=List[PlaylistOut])
 async def get_playlists(
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.get_playlists()
 
@@ -41,7 +41,7 @@ async def get_playlists(
 async def get_playlist_with_tracks(
     playlist_id: int,
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.get_playlist_with_tracks(playlist_id)
 
@@ -53,7 +53,7 @@ async def add_track_to_playlist(
     playlist_id: int,
     track_id: int,
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.add_track_to_playlist(playlist_id, track_id)
 
@@ -62,7 +62,7 @@ async def add_track_to_playlist(
 async def delete_playlist(
     playlist_id: int,
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.delete_playlist(playlist_id)
 
@@ -75,6 +75,6 @@ async def delete_track_from_playlist(
     playlist_id: int,
     track_id: int,
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     return playlist_repo.delete_track_from_playlist(playlist_id, track_id)
