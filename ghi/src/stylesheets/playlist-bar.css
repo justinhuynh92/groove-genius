@@ -1,0 +1,32 @@
+/* Playlist Bar Container */
+.playlist-bar-container {
+  position: fixed; /* Stick it to the left */
+  left: 0;
+  top: 0;
+  height: 100vh; /* Full view height */
+  width: 250px; /* Width */
+  background-color: #333; /* Muted grey background */
+  color: #fff; /* White text */
+  border-right: 2px solid #444; /* Sleek border */
+  overflow-y: auto; /* Vertical scroll */
+}
+
+/* Playlist Header */
+.playlist-bar-header {
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #444;
+}
+
+/* Playlist Item */
+.playlist-item {
+  padding: 1rem;
+  font-size: 1.2rem;
+  list-style-type: none; /* No bullet points */
+}
+
+/* Hover effect for better UX */
+.playlist-item:hover {
+  background-color: #444;
+  cursor: pointer;
+}
