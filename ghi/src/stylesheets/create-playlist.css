@@ -1,0 +1,11 @@
+/* Parent Container */
+.main-container {
+  display: flex;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 260px; /* Sidebar width + a little space */
+  width: calc(100% - 260px);
+  padding: 1rem;
+}

@@ -1,0 +1,24 @@
+.playlist-container {
+  /* Styles for the container div */
+  margin: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.playlist-header {
+  /* Styles for the h1 tag */
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.playlist-list {
+  /* Styles for the unordered list */
+  list-style: none;
+  padding: 0;
+}
+
+.playlist-item {
+  /* Styles for each list item */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
