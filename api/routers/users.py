@@ -11,7 +11,7 @@ from authenticator import authenticator
 from pydantic import BaseModel
 from queries.users import UserRepository
 from models.users import UserIn, UserOut, User
-
+from typing import List
 
 class AccountForm(BaseModel):
     username: str
@@ -84,3 +84,10 @@ async def update_user(
     if response is None:
         return {"message": "Could not get user"}
     return response
+
+@router.get("/users", response_model=List[UserOut])
+async def get_all_users(
+    user_repo: UserRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return user_repo.get_all_users()

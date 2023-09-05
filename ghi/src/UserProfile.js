@@ -1,53 +1,43 @@
 import React, {useEffect, useState } from 'react';
-import { useAuthContext } from "./Auth";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function ProfilePage() {
-    const { token } = useAuthContext();
+    const {token, logout, fetchWithToken} = useToken();
     const [username, setUsername] = useState([]);
-    const fetchProfileData = async () => {
-            const URL = `${process.env.REACT_APP_SWOOP_SERVICE_API_HOST}/api/accounts`;
 
-            const response = await fetch(URL, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setUsername(data)
-            }
+    const logUserOut = async () => {
+        logout();
+        setUsername([]);
+    }
+    const getUserData = async () => {
+        if (token) {
+            const url = `http://localhost:8000/accounts/`
+            const user = await fetchWithToken(url);
+            setUsername(user);
         }
+    }
     useEffect(() => {
-        const fetchProfileData = async () => {
-            const URL = `${process.env.REACT_APP_SWOOP_SERVICE_API_HOST}/api/accounts`;
-
-            const response = await fetch(URL, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setUsername(data)
-            }
-        }
-        fetchProfileData();
+        getUserData();
     }, [token]);
 
-  return (
-    <>
-    <div>
+    return (
         <div>
-            <h1>Hello, {username}</h1>
+            <div>
+                <h1>Hello, {username}</h1>
+            </div>
+            <div>
+            <ul>
+                <li>
+                    <h2>Username</h2>
+                    <p>{username}</p>
+                </li>
+            </ul>
+            </div>
+            <div>
+            <button onClick={logUserOut}>Logout</button>
+            </div>
         </div>
-        <div>
-        <ul>
-            <li>
-                <h2>Username</h2>
-                <p>{username}</p>
-            </li>
-        </ul>
-        </div>
-    </div>
-    </>
-)};
+    )
+};
 
 export default ProfilePage
