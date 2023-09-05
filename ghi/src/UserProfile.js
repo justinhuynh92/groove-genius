@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function ProfilePage() {

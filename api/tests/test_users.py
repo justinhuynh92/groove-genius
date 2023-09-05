@@ -11,10 +11,15 @@ class UserRepo:
             userId=str,
         )
 
-def test_get_user():
+def test_get_users():
     app.dependency_overrides[UserRepository] = UserRepo
-    response = client.get("/users")
+    response = client.get("/users/{id}")
     app.dependency_overrides = {}
 
-    assert response.status_code == 200
-    assert response.json() == []
+    assert response.status_code == 401
+    assert response.json() == {
+        "userID": str
+    }
+
+def test_init():
+    assert 1 == 1

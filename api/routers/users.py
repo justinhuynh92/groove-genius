@@ -85,9 +85,9 @@ async def update_user(
         return {"message": "Could not get user"}
     return response
 
-@router.get("/users", response_model=List[UserOut])
-async def get_all_users(
-    user_repo: UserRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
-):
-    return user_repo.get_all_users()
+# @router.get("/users", response_model=List[UserOut])
+# async def get_all_users(
+#     user_repo: UserRepository = Depends(),
+#     account_data: dict = Depends(authenticator.get_current_account_data),
+# ):
+#     return user_repo.get_all_users()
