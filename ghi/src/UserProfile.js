@@ -11,7 +11,7 @@ function ProfilePage() {
     }
     const getUserData = async () => {
         if (token) {
-            const url = `http://localhost:8000/accounts/`
+            const url = `http://localhost:8000/profile/`
             const user = await fetchWithToken(url);
             setUsername(user);
         }
