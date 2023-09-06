@@ -3,7 +3,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function ProfilePage() {
     const {token, logout, fetchWithToken} = useToken();
-    const [username, setUsername] = useState([]);
+    const [username, setUsername] = useState('');
 
     const logUserOut = async () => {
         logout();
@@ -11,10 +11,9 @@ function ProfilePage() {
     }
     const getUserData = async () => {
         if (token) {
-            const url = `http://localhost:8000/token`
+            const url = `http://localhost:8000/accounts`
             const user = await fetchWithToken(url);
-            console.log(await user)
-            setUsername(user);
+            setUsername(user.username);
         }
     }
     useEffect(() => {

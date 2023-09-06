@@ -5,6 +5,9 @@ import GenreList from "./genres/ListOfGenres.js";
 import GenreForm from "./genres/CreateGenreForm.js";
 import PlaylistList from "./Components/PlaylistList";
 import CreatePlaylist from "./Components/CreatePlaylist";
+import TrackDetail from "./tracks/TrackDetail";
+import TrackDetailView from "./tracks/TrackDetailView";
+import TrackForm from "./tracks/CreateTrackForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Nav from "./Nav.js";
@@ -26,6 +29,9 @@ function App() {
             <Route path="/genres/new" element={<GenreForm />} />
             <Route path="/playlists" element={<PlaylistList />} />
             <Route path="/playlists/new" element={<CreatePlaylist />} />
+            <Route path="/tracks" element={<TrackDetail/>} />
+            <Route path="/tracks/:id" element={<TrackDetailView/>} />
+            <Route path="/tracks/new" element={<TrackForm />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </AuthProvider>

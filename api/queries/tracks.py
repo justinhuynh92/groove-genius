@@ -146,3 +146,20 @@ class TrackRepository:
                     return TrackUpdate(**account_data)
         except Exception:
             return {"message": "Could not update track"}
+        
+    def get_tracks_by_title(self, title: str):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT *
+                        FROM tracks t
+                        WHERE t.title = %s
+                        """,
+                        (title,),
+                    )
+                    rows = cur.fetchall()
+                    return rows
+        except Exception:
+            return {"message": "Could not retrieve tracks by title"}

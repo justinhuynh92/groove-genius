@@ -156,12 +156,12 @@ function Nav() {
                     aria-labelledby="navbarDarkDropdownMenuLink"
                   >
                     <li>
-                      <Link className="dropdown-item" to="/tracks">
+                      <Link className="dropdown-item" to="/tracks/new">
                         Create Track
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/tracks/{track_id}">
+                      <Link className="dropdown-item" to="/tracks">
                         Get Track
                       </Link>
                     </li>
