@@ -73,21 +73,14 @@ async def get_by_cookie(
 ) -> AccountToken:
     return {"access_token": request.cookies[authenticator.cookie_name], "type": "Bearer", "account": account_data}
 
-@router.get("/users/{id}", response_model=dict)
-async def update_user(
+@router.get("/users/{username}", response_model=dict)
+async def get_user(
     id: int,
     user: User,
     user_repo: UserRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
+    # account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    response = user_repo.get_user(id, user)
+    response = user_repo.get(user.username)
     if response is None:
         return {"message": "Could not get user"}
     return response
-
-# @router.get("/users", response_model=List[UserOut])
-# async def get_all_users(
-#     user_repo: UserRepository = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     return user_repo.get_all_users()
