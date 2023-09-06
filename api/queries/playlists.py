@@ -93,7 +93,7 @@ class PlaylistRepository:
                     )
                     row = cur.fetchone()
                     if not row:
-                        return None
+                        return []
                     playlist_name = row[0]
 
                     cur.execute(
@@ -122,7 +122,7 @@ class PlaylistRepository:
                     return PlaylistWithTracksOut(
                         id=playlist_id,
                         name=playlist_name,
-                        tracks=tracks if tracks else None,
+                        tracks=tracks if tracks else [],
                     )
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
@@ -176,7 +176,7 @@ class PlaylistRepository:
                     )
                     row = cur.fetchone()
                     if not row:
-                        return None
+                        return []
                     else:
                         return PlaylistTrackLink(
                             playlist_id=row[0],
