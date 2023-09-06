@@ -6,21 +6,18 @@ import { useParams } from "react-router-dom";
 const PlaylistDetail = () => {
   const [playlist, setPlaylist] = useState({ tracks: [] });
   const { token } = useToken();
-  const { playlistId } = useParams();
+  const { id } = useParams();
   useEffect(() => {
-    if (!token || !playlistId) return;
+    if (!token || !id) return;
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/playlists/${playlistId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:8000/playlists/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const data = await response.json();
 
@@ -33,7 +30,7 @@ const PlaylistDetail = () => {
     };
 
     fetchData();
-  }, [token, playlistId]);
+  }, [token, id]);
 
   return (
     <div className="playlist-container">

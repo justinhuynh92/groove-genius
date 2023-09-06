@@ -9,6 +9,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Nav from "./Nav.js";
 import PlaylistDetail from "./Components/PlaylistDetail";
+import TrackDetail from "./tracks/TrackDetail";
+import TrackDetailView from "./tracks/TrackDetailView";
+import TrackForm from "./tracks/CreateTrackForm";
+import ProfilePage from "./UserProfile.js";
 
 function App() {
   // const domain = /https:\/\/[^/]+/;
@@ -26,7 +30,11 @@ function App() {
             <Route path="/genres/new" element={<GenreForm />} />
             <Route path="/playlists" element={<PlaylistList />} />
             <Route path="/playlists/new" element={<CreatePlaylist />} />
-            <Route path="/playlists/:playlistId" element={<PlaylistDetail />} />
+            <Route path="/playlists/:id" element={<PlaylistDetail />} />
+            <Route path="/tracks" element={<TrackDetail />} />
+            <Route path="/tracks/:id" element={<TrackDetailView />} />
+            <Route path="/tracks/new" element={<TrackForm />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

@@ -54,3 +54,14 @@ async def update_track(
         return {"message": "Track updated successfully"}
     else:
         raise HTTPException(status_code=400, detail="Track can't update")
+    
+@router.get("/tracks", response_model=list)
+async def get_tracks_by_title(
+    title: str, track_repo: TrackRepository = Depends()
+):
+    tracks = track_repo.get_tracks_by_title(title)
+
+    if not tracks:
+        raise HTTPException(status_code=404, detail="No tracks found for this username")
+
+    return tracks
