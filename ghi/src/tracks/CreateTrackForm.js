@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function TrackForm({}) {
+function TrackForm() {
   const [name, setName] = useState("");
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
@@ -35,7 +35,7 @@ function TrackForm({}) {
     setName(value);
   }
 
-   function handleChangeArtist(event) {
+  function handleChangeArtist(event) {
     const { value } = event.target;
     setArtist(value);
   }
@@ -49,7 +49,6 @@ function TrackForm({}) {
     const { value } = event.target;
     setGenres(value);
   }
-
 
   return (
     <div className="row">

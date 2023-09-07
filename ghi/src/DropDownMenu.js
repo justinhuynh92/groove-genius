@@ -2,7 +2,6 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import user from "../src/img/user.png";
-import logoutpic from "../src/img/log-out.png";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +34,7 @@ function DropDown() {
               setOpen(!open);
             }}
           >
-            <img src={user}></img>
+            <img src={user} alt="user pic"></img>
           </div>
           <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
             <h3>
@@ -81,7 +80,7 @@ function DropDown() {
               setOpen(!open);
             }}
           >
-            <img src={user}></img>
+            <img src={user} alt="user pic"></img>
           </div>
           <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
             <h3>
@@ -107,8 +106,8 @@ function DropDown() {
 function DropdownItem(props) {
   return (
     <li className="dropdownItem">
-      <img src={props.img}></img>
-      <a> {props.text} </a>
+      <img src={props.img} alt="prop pic"></img>
+      <p> {props.text} </p>
     </li>
   );
 }

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function SignupForm() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const handleUserNameChange = (e) => {
     const value = e.target.value;
@@ -36,30 +35,34 @@ function SignupForm() {
     }
   };
 
-return (
-  <div>
+  return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Sign Up!</h1>
-        <div>
-            <input type="text" value={username} onChange={handleUserNameChange} />
-          <label>
-            Username:
-          </label>
-          <br />
-        </div>
-        <div>
-            <input type="password" value={password} onChange={handlePasswordChange} />
-          <label>
-            Password:
-          </label>
-          <br />
-        </div>
-        <button type="submit">Sign Up!</button>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <h1>Sign Up!</h1>
+          <div>
+            <input
+              type="text"
+              value={username}
+              onChange={handleUserNameChange}
+            />
+            <label>Username:</label>
+            <br />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <label>Password:</label>
+            <br />
+          </div>
+          <button type="submit">Sign Up!</button>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default SignupForm;

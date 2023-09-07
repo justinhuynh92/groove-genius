@@ -1,7 +1,6 @@
 from fastapi import (
     Depends,
     HTTPException,
-    # status,
     Response,
     APIRouter,
     Request,
@@ -11,7 +10,7 @@ from authenticator import authenticator
 from pydantic import BaseModel
 from queries.users import UserRepository
 from models.users import UserIn, UserOut, User
-from typing import List
+
 
 class AccountForm(BaseModel):
     username: str
@@ -71,11 +70,15 @@ async def get_by_cookie(
     request: Request,
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> AccountToken:
-    return {"access_token": request.cookies[authenticator.cookie_name], "type": "Bearer", "account": account_data}
+    return {
+        "access_token": request.cookies[authenticator.cookie_name],
+        "type": "Bearer",
+        "account": account_data,
+    }
+
 
 @router.get("/accounts")
 async def get_account(
-    account_data: dict = Depends(authenticator.try_get_current_account_data)
+    account_data: dict = Depends(authenticator.try_get_current_account_data),
 ) -> UserOut:
     return account_data
-

@@ -4,9 +4,11 @@ from queries.tracks import TrackRepository
 
 client = TestClient(app)
 
+
 class EmptyTrackQueries:
     def get_tracks(self):
         return []
+
 
 def test_get_all_tracks():
     app.dependency_overrides[TrackRepository] = EmptyTrackQueries
@@ -19,4 +21,4 @@ def test_get_all_tracks():
 
     # Assert
     assert response.status_code == 200
-    assert response.json() == {"tracks":[]}
+    assert response.json() == {"tracks": []}

@@ -1,43 +1,44 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function ProfilePage() {
-    const {token, logout, fetchWithToken} = useToken();
-    const [username, setUsername] = useState('');
+  const { token, logout, fetchWithToken } = useToken();
+  const [username, setUsername] = useState("");
 
-    const logUserOut = async () => {
-        logout();
-        setUsername([]);
-    }
+  const logUserOut = async () => {
+    logout();
+    setUsername([]);
+  };
+
+  useEffect(() => {
     const getUserData = async () => {
-        if (token) {
-            const url = `http://localhost:8000/accounts`
-            const user = await fetchWithToken(url);
-            setUsername(user.username);
-        }
-    }
-    useEffect(() => {
-        getUserData();
-    }, [token]);
+      if (token) {
+        const url = `http://localhost:8000/accounts`;
+        const user = await fetchWithToken(url);
+        setUsername(user.username);
+      }
+    };
+    getUserData();
+  }, [token, fetchWithToken]);
 
-    return (
-        <div>
-            <div>
-                <h1>Hello, {username}</h1>
-            </div>
-            <div>
-            <ul>
-                <li>
-                    <h2>Username</h2>
-                    <p>{username}</p>
-                </li>
-            </ul>
-            </div>
-            <div>
-            <button onClick={logUserOut}>Logout</button>
-            </div>
-        </div>
-    )
-};
+  return (
+    <div>
+      <div>
+        <h1>Hello, {username}</h1>
+      </div>
+      <div>
+        <ul>
+          <li>
+            <h2>Username</h2>
+            <p>{username}</p>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <button onClick={logUserOut}>Logout</button>
+      </div>
+    </div>
+  );
+}
 
-export default ProfilePage
+export default ProfilePage;

@@ -3,8 +3,9 @@ import LoginForm from "./LogInForm.js";
 import SignupForm from "./SignUpForm.js";
 import GenreList from "./genres/ListOfGenres.js";
 import GenreForm from "./genres/CreateGenreForm.js";
-import PlaylistList from "./Components/PlaylistList";
-import CreatePlaylist from "./Components/CreatePlaylist";
+import PlaylistList from "./PlaylistComponents/PlaylistList";
+import CreatePlaylist from "./PlaylistComponents/CreatePlaylist";
+import PlaylistDetail from "./PlaylistComponents/PlaylistDetail";
 import TrackDetail from "./tracks/TrackDetail";
 import TrackDetailView from "./tracks/TrackDetailView";
 import TrackForm from "./tracks/CreateTrackForm";
@@ -14,13 +15,13 @@ import DropDown from "./DropDownMenu.js";
 import ProfilePage from "./UserProfile.js";
 
 function App() {
-  // const domain = /https:\/\/[^/]+/;
-  // const basename = process.env.PUBLIC_URL.replace(domain, "");
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
 
   return (
     <div>
       <BrowserRouter>
-        <AuthProvider baseUrl={"http://localhost:8000"}>
+        <AuthProvider basename={basename}>
           <DropDown />
           <Routes>
             <Route path="/login" element={<LoginForm />} />
@@ -29,6 +30,7 @@ function App() {
             <Route path="/genres/new" element={<GenreForm />} />
             <Route path="/playlists" element={<PlaylistList />} />
             <Route path="/playlists/new" element={<CreatePlaylist />} />
+            <Route path="/playlists/:id" element={<PlaylistDetail />} />
             <Route path="/tracks" element={<TrackDetail />} />
             <Route path="/tracks/:id" element={<TrackDetailView />} />
             <Route path="/tracks/new" element={<TrackForm />} />

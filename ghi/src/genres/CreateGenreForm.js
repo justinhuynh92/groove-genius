@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GenreList from "./ListOfGenres";
 
-function GenreForm({}) {
+function GenreForm() {
   const [name, setName] = useState("");
 
   const handleSubmit = async (event) => {
