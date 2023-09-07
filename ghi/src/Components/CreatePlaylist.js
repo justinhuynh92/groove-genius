@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PlaylistBar from "./PlaylistBar.js";
 import "../stylesheets/create-playlist.css";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 const CreatePlaylist = () => {
   const [name, setName] = useState("");
   const [playlistCreated, setPlaylistCreated] = useState(false);
+  const { token } = useToken();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:8000/playlists", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ name }),
       });
 
@@ -36,7 +41,7 @@ const CreatePlaylist = () => {
         window.location.reload();
       }, 3000);
     }
-  }, [playlistCreated]);
+  }, [playlistCreated, token]);
   return (
     <div className="main-container">
       <PlaylistBar />
@@ -62,5 +67,4 @@ const CreatePlaylist = () => {
     </div>
   );
 };
-
 export default CreatePlaylist;

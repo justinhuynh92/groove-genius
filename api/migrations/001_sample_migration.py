@@ -18,7 +18,7 @@ steps = [
             title VARCHAR(20) NOT NULL,
             artist VARCHAR(20) NOT NULL,
             album VARCHAR(30) NOT NULL,
-            genre_id INT[] NOT NULL
+            genre VARCHAR(30) NOT NULL
         );
 
         CREATE TABLE playlists (
@@ -26,11 +26,6 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL
             );
 
-        CREATE TABLE track_genres (
-        track_id INT NOT NULL REFERENCES tracks(id),
-        genre_id INT NOT NULL REFERENCES genres(id),
-        PRIMARY KEY (track_id, genre_id)
-        );
 
         CREATE TABLE playlist_tracks (
         playlist_id INT NOT NULL REFERENCES playlists(id) ON DELETE CASCADE,
@@ -41,7 +36,6 @@ steps = [
         """,
         # "Down" SQL statement
         """
-        DROP TABLE track_genres;
         DROP TABLE playlist_tracks;
         DROP TABLE playlists;
         DROP TABLE tracks;
