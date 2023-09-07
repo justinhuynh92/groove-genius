@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+<<<<<<< HEAD:ghi/src/PlaylistComponents/PlaylistBar.js
 import { Link } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "../stylesheets/playlist-bar.css";
+=======
+import useToken from "@galvanize-inc/jwtdown-for-react";
+>>>>>>> main:ghi/src/Components/PlaylistBar.js
 
 const PlaylistBar = () => {
   const [playlists, setPlaylists] = useState([]);

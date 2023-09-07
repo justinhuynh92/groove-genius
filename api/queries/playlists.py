@@ -1,4 +1,5 @@
 from typing import List, Optional
+from collections import defaultdict
 import os
 from psycopg_pool import ConnectionPool
 from models.playlists import (
@@ -81,6 +82,7 @@ class PlaylistRepository:
         try:
             print(f"playlist_id: {playlist_id}")
             tracks = []
+<<<<<<< HEAD
             playlist_name = None
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -102,6 +104,19 @@ class PlaylistRepository:
                         """
                     SELECT t.id, t.title, t.artist, t.album, t.genre
                     FROM playlist_tracks pt
+=======
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    # Query to get playlist and tracks
+                    print(
+                        f"About to execute query for playlist ID: {playlist_id}"
+                    )
+                    cur.execute(
+                        """
+                    SELECT p.id as playlist_id, p.name as playlist_name, t.id as track_id, t.title, t.artist, t.album, t.genre
+                    FROM playlist_tracks pt
+                    JOIN playlists p ON pt.playlist_id = p.id
+>>>>>>> main
                     JOIN tracks t ON pt.track_id = t.id
                     WHERE pt.playlist_id = %s;
                     """,
@@ -109,15 +124,32 @@ class PlaylistRepository:
                     )
                     rows = cur.fetchall()
 
+<<<<<<< HEAD
+=======
+                    # If no playlist found
+                    if not rows:
+                        raise HTTPException(404, "Playlist not found.")
+
+                    playlist_name = rows[0][1]
+
+>>>>>>> main
                     # Build the tracks list
                     for row in rows:
                         tracks.append(
                             Track(
+<<<<<<< HEAD
                                 id=row[0],
                                 title=row[1],
                                 artist=row[2],
                                 album=row[3],
                                 genre=row[4],
+=======
+                                id=row[2],
+                                title=row[3],
+                                artist=row[4],
+                                album=row[5],
+                                genre=row[6],
+>>>>>>> main
                             )
                         )
 
