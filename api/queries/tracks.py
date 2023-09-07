@@ -13,7 +13,7 @@ class TrackRepository:
                     cur.execute(
                         """
                         INSERT INTO tracks
-                        (title, artist, album, genre_id)
+                        (title, artist, album, genre)
                         VALUES (%s, %s, %s, %s)
                         RETURNING id;
                         """,
@@ -21,7 +21,7 @@ class TrackRepository:
                             track.title,
                             track.artist,
                             track.album,
-                            track.genre_id,
+                            track.genre,
                         ),
                     )
                     id = cur.fetchone()[0]
@@ -30,7 +30,7 @@ class TrackRepository:
                         title=track.title,
                         artist=track.artist,
                         album=track.album,
-                        genre_id=track.genre_id,
+                        genre=track.genre,
                     )
 
                 return created_track
@@ -41,74 +41,35 @@ class TrackRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
+                    # Now just fetch the track and genre as a string
                     cur.execute(
                         """
-                        SELECT genre_id
-                        FROM tracks
-                        WHERE id = %s;
-                        """,
-                        (track_id,),
-                    )
-                    genre_ids = cur.fetchone()
-
-                    if genre_ids:
-                        genre_ids = genre_ids[0]
-                        for genre_id in genre_ids:
-                            cur.execute(
-                                """
-                                SELECT track_id
-                                FROM track_genres
-                                WHERE track_id = %s AND genre_id = %s;
-                                """,
-                                (track_id, genre_id),
-                            )
-                            association_exists = cur.fetchone()
-                            if not association_exists:
-                                cur.execute(
-                                    """
-                                    INSERT INTO track_genres (track_id, genre_id)
-                                    VALUES (%s, %s);
-                                    """,
-                                    (track_id, genre_id),
-                                )
-
-                    cur.execute(
-                        """
-                        SELECT t.id, t.title, t.artist, t.album, array_agg(g.id) AS genre_ids, array_agg(g.name) AS genre_names
-                        FROM tracks t
-                        JOIN track_genres tg ON t.id = tg.track_id
-                        JOIN genres g ON tg.genre_id = g.id
-                        WHERE t.id = %s
-                        GROUP BY t.id, t.title, t.artist, t.album;
-                        """,
+                    SELECT id, title, artist, album, genre
+                    FROM tracks
+                    WHERE id = %s;
+                    """,
                         (track_id,),
                     )
                     row = cur.fetchone()
                     if row:
+                        # Pack that data into a dict
                         response = {
                             "id": row[0],
                             "title": row[1],
                             "artist": row[2],
                             "album": row[3],
-                            "genre_names": row[5],
+                            "genre": row[4],
                         }
                         return response
                     else:
                         return None
-        except Exception:
+        except Exception as e:
+            print(f"Exception: {e}")
             return {"message": "Could not retrieve track"}
 
     def delete_track(self, track_id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    DELETE FROM track_genres
-                    WHERE track_id = %s;
-                    """,
-                    (track_id,),
-                )
-
                 cur.execute(
                     """
                     DELETE FROM tracks
@@ -131,7 +92,7 @@ class TrackRepository:
                         SET title = %s
                             artist = %s,
                             album = %s,
-                            genre_id = %s
+                            genre = %s
                         WHERE track_id = %s
                         """,
                         (
@@ -146,7 +107,7 @@ class TrackRepository:
                     return TrackUpdate(**account_data)
         except Exception:
             return {"message": "Could not update track"}
-        
+
     def get_tracks_by_title(self, title: str):
         try:
             with pool.connection() as conn:

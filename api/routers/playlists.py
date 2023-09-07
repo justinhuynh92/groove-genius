@@ -3,7 +3,6 @@ from fastapi import (
     APIRouter,
 )
 from typing import List
-from pydantic import BaseModel
 from authenticator import authenticator
 from queries.playlists import PlaylistRepository
 from models.playlists import (
@@ -20,7 +19,7 @@ router = APIRouter()
 async def create_playlist(
     playlist: NewPlaylist,
     playlist_repo: PlaylistRepository = Depends(),
-    # account_data=Depends(authenticator.get_current_account_data),
+    account_data=Depends(authenticator.get_current_account_data),
 ):
     id = playlist_repo.create_playlist(playlist)
     return {"id": id, **playlist.dict()}
@@ -47,7 +46,8 @@ async def get_playlist_with_tracks(
 
 
 @router.post(
-    "/playlists/{playlist_id}/tracks", response_model=PlaylistTrackLink
+    "/playlists/{playlist_id}/tracks/{track_id}",
+    response_model=PlaylistTrackLink,
 )
 async def add_track_to_playlist(
     playlist_id: int,

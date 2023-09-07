@@ -9,6 +9,11 @@
   color: #fff; /* White text */
   border-right: 2px solid #444; /* Sleek border */
   overflow-y: auto; /* Vertical scroll */
+<<<<<<< HEAD
+  scroll-behavior: smooth;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+=======
+>>>>>>> main
 }
 
 /* Playlist Header */
@@ -22,7 +27,13 @@
 .playlist-item {
   padding: 1rem;
   font-size: 1.2rem;
+<<<<<<< HEAD
+  list-style-type: none;
+  transition: background-color 0.3s ease-in-out;
+  /* No bullet points */
+=======
   list-style-type: none; /* No bullet points */
+>>>>>>> main
 }
 
 /* Hover effect for better UX */
