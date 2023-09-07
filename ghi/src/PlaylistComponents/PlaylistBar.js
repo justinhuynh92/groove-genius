@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import "../stylesheets/playlist-bar.css";
 
 const PlaylistBar = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -48,7 +50,7 @@ const PlaylistBar = () => {
       <ul className="playlist-bar-list">
         {playlists.map((playlist, index) => (
           <li key={index} className="playlist-item">
-            {playlist.name}
+            <Link to={`/playlists/${playlist.id}`}>{playlist.name}</Link>
           </li>
         ))}
       </ul>
