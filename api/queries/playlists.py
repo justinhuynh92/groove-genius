@@ -1,4 +1,5 @@
 from typing import List, Optional
+from collections import defaultdict
 import os
 from psycopg_pool import ConnectionPool
 from models.playlists import (
@@ -79,51 +80,52 @@ class PlaylistRepository:
         self, playlist_id: int
     ) -> Optional[PlaylistWithTracksOut]:
         try:
+            print(f"playlist_id: {playlist_id}")
+            tracks = []
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(
-                        """
-
-                        SELECT p.name AS playlist_name
-                        FROM playlists p
-                        WHERE p.id = %s;
-
-                        """,
-                        (playlist_id,),
+                    # Query to get playlist and tracks
+                    print(
+                        f"About to execute query for playlist ID: {playlist_id}"
                     )
-                    row = cur.fetchone()
-                    if not row:
-                        return []
-                    playlist_name = row[0]
-
                     cur.execute(
                         """
-    
-                        SELECT t.*
-                        FROM playlists p
-                        JOIN playlist_tracks pt ON p.id = pt.playlist_id
-                        JOIN tracks t ON pt.track_id = t.id
-                        WHERE p.id = %s;
-                        
-                        """,
+                    SELECT p.id as playlist_id, p.name as playlist_name, t.id as track_id, t.title, t.artist, t.album, t.genre
+                    FROM playlist_tracks pt
+                    JOIN playlists p ON pt.playlist_id = p.id
+                    JOIN tracks t ON pt.track_id = t.id
+                    WHERE pt.playlist_id = %s;
+                    """,
                         (playlist_id,),
                     )
                     rows = cur.fetchall()
-                    tracks = [
-                        Track(
-                            id=row[0],
-                            title=row[1],
-                            artist=row[2],
-                            album=row[3],
-                            genre_id=row[4],
+
+                    # If no playlist found
+                    if not rows:
+                        raise HTTPException(404, "Playlist not found.")
+
+                    playlist_name = rows[0][1]
+
+                    # Build the tracks list
+                    for row in rows:
+                        tracks.append(
+                            Track(
+                                id=row[2],
+                                title=row[3],
+                                artist=row[4],
+                                album=row[5],
+                                genre=row[6],
+                            )
                         )
-                        for row in rows
-                    ]
-                    return PlaylistWithTracksOut(
-                        id=playlist_id,
-                        name=playlist_name,
-                        tracks=tracks if tracks else [],
-                    )
+
+            print(
+                f"Fetched {len(tracks)} tracks for playlist ID: {playlist_id}"
+            )
+            return PlaylistWithTracksOut(
+                id=playlist_id,
+                name=playlist_name,
+                tracks=tracks if tracks else [],
+            )
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
@@ -135,13 +137,10 @@ class PlaylistRepository:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-
                         INSERT INTO playlist_tracks
                         (playlist_id, track_id)
                         VALUES (%s, %s)
                         RETURNING playlist_id, track_id;
-
-                        
                         """,
                         (playlist_id, track_id),
                     )
@@ -166,11 +165,9 @@ class PlaylistRepository:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-
                         DELETE FROM playlist_tracks
                         WHERE playlist_id = %s AND track_id = %s
                         RETURNING playlist_id, track_id;
-                        
                         """,
                         (playlist_id, track_id),
                     )

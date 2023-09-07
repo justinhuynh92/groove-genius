@@ -7,6 +7,7 @@ const PlaylistDetail = () => {
   const [playlist, setPlaylist] = useState({ tracks: [] });
   const { token } = useToken();
   const { id } = useParams();
+
   useEffect(() => {
     if (!token || !id) return;
     const fetchData = async () => {

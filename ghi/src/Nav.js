@@ -143,6 +143,7 @@ function Nav() {
               <ul className="navbar-nav" style={{ color: "black" }}>
                 <li className="nav-item dropdown">
                   <a
+                    href="/tracks"
                     className="nav-link dropdown-toggle"
                     id="navbarDarkDropdownMenuLink"
                     role="button"
@@ -156,20 +157,12 @@ function Nav() {
                     aria-labelledby="navbarDarkDropdownMenuLink"
                   >
                     <li>
-<<<<<<< HEAD
-                      <Link className="dropdown-item" to="/tracks">
-=======
                       <Link className="dropdown-item" to="/tracks/new">
->>>>>>> main
                         Create Track
                       </Link>
                     </li>
                     <li>
-<<<<<<< HEAD
-                      <Link className="dropdown-item" to="/tracks/{track_id}">
-=======
                       <Link className="dropdown-item" to="/tracks">
->>>>>>> main
                         Get Track
                       </Link>
                     </li>

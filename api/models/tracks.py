@@ -5,7 +5,7 @@ class Track(BaseModel):
     title: str
     artist: str
     album: str
-    genre_id: list[int]
+    genre: str
 
 
 class TrackOut(BaseModel):
@@ -13,11 +13,11 @@ class TrackOut(BaseModel):
     title: str
     artist: str
     album: str
-    genre_id: list[int]
+    genre: str
 
 
 class TrackUpdate(BaseModel):
     title: str
     artist: str
     album: str
-    genre_id: list[int]
+    genre: str

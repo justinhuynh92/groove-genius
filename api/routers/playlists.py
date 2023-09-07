@@ -46,7 +46,8 @@ async def get_playlist_with_tracks(
 
 
 @router.post(
-    "/playlists/{playlist_id}/tracks", response_model=PlaylistTrackLink
+    "/playlists/{playlist_id}/tracks/{track_id}",
+    response_model=PlaylistTrackLink,
 )
 async def add_track_to_playlist(
     playlist_id: int,
