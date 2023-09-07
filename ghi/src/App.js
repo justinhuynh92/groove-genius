@@ -5,13 +5,12 @@ import GenreList from "./genres/ListOfGenres.js";
 import GenreForm from "./genres/CreateGenreForm.js";
 import PlaylistList from "./Components/PlaylistList";
 import CreatePlaylist from "./Components/CreatePlaylist";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
-import Nav from "./Nav.js";
-import PlaylistDetail from "./Components/PlaylistDetail";
 import TrackDetail from "./tracks/TrackDetail";
 import TrackDetailView from "./tracks/TrackDetailView";
 import TrackForm from "./tracks/CreateTrackForm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import DropDown from "./DropDownMenu.js";
 import ProfilePage from "./UserProfile.js";
 
 function App() {
@@ -21,8 +20,8 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Nav />
         <AuthProvider baseUrl={"http://localhost:8000"}>
+          <DropDown />
           <Routes>
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
@@ -30,7 +29,6 @@ function App() {
             <Route path="/genres/new" element={<GenreForm />} />
             <Route path="/playlists" element={<PlaylistList />} />
             <Route path="/playlists/new" element={<CreatePlaylist />} />
-            <Route path="/playlists/:id" element={<PlaylistDetail />} />
             <Route path="/tracks" element={<TrackDetail />} />
             <Route path="/tracks/:id" element={<TrackDetailView />} />
             <Route path="/tracks/new" element={<TrackForm />} />
