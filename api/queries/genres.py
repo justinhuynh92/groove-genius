@@ -51,14 +51,6 @@ class GenreRepository:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    DELETE FROM track_genres
-                    WHERE genre_id = %s;
-                    """,
-                    (genre_id,),
-                )
-
-                cur.execute(
-                    """
                     DELETE FROM genres
                     WHERE id = %s;
                     """,

@@ -38,11 +38,11 @@ async def create_genre(
     return {"id": created_genre, **genre.dict()}
 
 
-@router.delete("/api/genre/{genre_id}", response_model=bool)
+@router.delete("/genres/{genre_id}", response_model=bool)
 async def delete_genre(
     genre_id: int,
     queries: GenreRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
+    # account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     queries.delete_genre(genre_id)
     return True
