@@ -51,5 +51,5 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
-      PUBLIC_URL: https://JDCT1.gitlab.io/groove-genius
+      PUBLIC_URL: https://jdct1.gitlab.io/groove-genius
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
