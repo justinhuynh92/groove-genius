@@ -15,13 +15,13 @@ import DropDown from "./DropDownMenu.js";
 import ProfilePage from "./UserProfile.js";
 
 function App() {
-  //const domain = /https:\/\/[^/]+/;
-  //const basename = process.env.PUBLIC_URL.replace(domain, "");
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
 
   return (
     <div>
       <BrowserRouter>
-        <AuthProvider baseUrl={"http://localhost:8000"}>
+        <AuthProvider basename={basename}>
           <DropDown />
           <Routes>
             <Route path="/login" element={<LoginForm />} />
