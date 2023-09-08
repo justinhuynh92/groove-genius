@@ -20,8 +20,8 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter>
-        <AuthProvider basename={basename}>
+      <BrowserRouter basename={basename}>
+        <AuthProvider>
           <DropDown />
           <Routes>
             <Route path="/login" element={<LoginForm />} />
