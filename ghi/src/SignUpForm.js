@@ -19,7 +19,7 @@ function SignupForm() {
     const data = {};
     data.username = username;
     data.password = password;
-    const userUrl = `http://localhost:8000/users`;
+    const userUrl = `https://may-8-pt-groove-genius.mod3projects.com/users`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),

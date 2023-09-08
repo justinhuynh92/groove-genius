@@ -12,7 +12,7 @@ class UserRepo:
 
 def test_get_users():
     app.dependency_overrides[UserRepository] = UserRepo
-    response = client.get("/users/{username}")
+    response = client.get("/users/{id}")
     app.dependency_overrides = {}
 
     assert response.status_code == 200
