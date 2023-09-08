@@ -9,7 +9,8 @@ function GenreForm() {
     const data = {};
     data.name = name;
 
-    const genreUrl = "http://localhost:8000/genres/new";
+    const genreUrl =
+      "https://may-8-pt-groove-genius.mod3projects.com/genres/new";
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),
@@ -19,7 +20,8 @@ function GenreForm() {
     };
     const response = await fetch(genreUrl, fetchConfig);
     if (response.ok) {
-      window.location.href = "http://localhost:3000/genres/new";
+      window.location.href =
+        "https://may-8-pt-groove-genius.mod3projects.com/genres/new";
       setName("");
     }
   };

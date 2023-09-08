@@ -4,7 +4,9 @@ function GenreList() {
   const [genre, setGenre] = useState([]);
 
   async function getGenre() {
-    const response = await fetch("http://localhost:8000/genres");
+    const response = await fetch(
+      "https://may-8-pt-groove-genius.mod3projects.com/genres"
+    );
     if (response.ok) {
       const data = await response.json();
       setGenre(data);
@@ -14,7 +16,7 @@ function GenreList() {
   }
 
   async function handleDelete(genre) {
-    const url = `http://localhost:8000/genres/${genre}`;
+    const url = `https://may-8-pt-groove-genius.mod3projects.com/genres/${genre}`;
     const fetchConfig = {
       method: "DELETE",
     };
