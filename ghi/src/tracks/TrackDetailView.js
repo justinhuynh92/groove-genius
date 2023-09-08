@@ -11,7 +11,7 @@ function TrackDetailView() {
     async function getTrack() {
       if (token) {
         const response = await fetchWithToken(
-          `http://localhost:8000/tracks/${id}`
+          `https://may-8-pt-groove-genius.mod3projects.com/tracks/${id}`
         );
         setTrack(response);
         console.log(response.genre_names);

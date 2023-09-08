@@ -14,7 +14,7 @@ function TrackForm() {
     data.album = album;
     data.genre_id = [genres];
 
-    const trackUrl = "http://localhost:8000/tracks";
+    const trackUrl = "https://may-8-pt-groove-genius.mod3projects.com/tracks";
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),

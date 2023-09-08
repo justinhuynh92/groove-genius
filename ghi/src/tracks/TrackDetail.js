@@ -12,7 +12,7 @@ function TrackDetail() {
   async function getTrack(title) {
     if (token) {
       const response = await fetchWithToken(
-        `http://localhost:8000/tracks?title=${title}`
+        `https://may-8-pt-groove-genius.mod3projects.com/tracks?title=${title}`
       );
       if (response.length === undefined) {
         setNotFound(true);
@@ -26,7 +26,7 @@ function TrackDetail() {
   }
 
   async function handleDeleteTrack(id) {
-    const locationURL = `http://localhost:8000/tracks/${id}`;
+    const locationURL = `https://may-8-pt-groove-genius.mod3projects.com/tracks/${id}`;
     const fetchConfig = {
       method: "DELETE",
     };
