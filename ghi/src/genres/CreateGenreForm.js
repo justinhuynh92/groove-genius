@@ -20,8 +20,7 @@ function GenreForm() {
     };
     const response = await fetch(genreUrl, fetchConfig);
     if (response.ok) {
-      window.location.href =
-        "https://may-8-pt-groove-genius.mod3projects.com/genres/new";
+      window.location.href = "https://jdct1.gitlab.io/groove-genius/genres/new";
       setName("");
     }
   };
