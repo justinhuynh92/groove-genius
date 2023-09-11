@@ -21,7 +21,9 @@ function App() {
   return (
     <div>
       <BrowserRouter basename={basename}>
-        <AuthProvider baseUrl={"https://may-8-pt-groove-genius.mod3projects.com"} >
+        <AuthProvider
+          baseUrl={"https://may-8-pt-groove-genius.mod3projects.com"}
+        >
           <DropDown />
           <Routes>
             <Route path="/login" element={<LoginForm />} />

@@ -31,10 +31,11 @@ function GenreList() {
   }, []);
 
   return (
-    <table className="table table-striped">
+    <table className="styled-table">
       <thead>
         <tr>
           <th>Name</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

@@ -30,30 +30,26 @@ function GenreForm() {
   }
   return (
     <>
-      <div className="container">
-        <GenreList />
-      </div>
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Create New Genre</h1>
-            <form onSubmit={handleSubmit} id="create-genre-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={name}
-                  onChange={handleChangeName}
-                  placeholder="Genre Name"
-                  required
-                  type="text"
-                  name="name"
-                  id="name"
-                  className="form-control"
-                />
-              </div>
-              <button className="btn btn-primary">Create</button>
-            </form>
+      <div className="card">
+        <h1>Create New Genre</h1>
+        <form onSubmit={handleSubmit} id="create-genre-form">
+          <div className="form-floating mb-3">
+            <input
+              value={name}
+              onChange={handleChangeName}
+              placeholder="Genre Name"
+              required
+              type="text"
+              name="name"
+              id="name"
+              className="form-control"
+            />
           </div>
-        </div>
+          <button className="btn btn-primary">Create</button>
+        </form>
+      </div>
+      <div>
+        <GenreList />
       </div>
     </>
   );

@@ -2,6 +2,11 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import user from "../src/img/user.png";
+import register from "../src/img/register.png";
+import logIn from "../src/img/login.png";
+import genre from "../src/img/genre.png";
+import playlist from "../src/img/playlist.jpg";
+import tracks from "../src/img/tracks.jpg";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,13 +52,13 @@ function DropDown() {
                 <DropdownItem img={user} text={"My Profile"} />
               </Link>
               <Link to="/genres/new">
-                <DropdownItem img={user} text={"Create Genre"} />
+                <DropdownItem img={genre} text={"Create Genre"} />
               </Link>
               <Link to="/playlists/new">
-                <DropdownItem img={user} text={"Create Playlist"} />
+                <DropdownItem img={playlist} text={"Create Playlist"} />
               </Link>
               <Link to="/tracks">
-                <DropdownItem img={user} text={"Create Track"} />
+                <DropdownItem img={tracks} text={"Create Track"} />
               </Link>
               <button
                 onClick={() => {
@@ -90,10 +95,10 @@ function DropDown() {
             </h3>
             <ul>
               <Link to="/login">
-                <DropdownItem img={user} text={"Log In"} />
+                <DropdownItem img={logIn} text={"Log In"} />
               </Link>
               <Link to="/signup">
-                <DropdownItem img={user} text={"Sign Up"} />
+                <DropdownItem img={register} text={"Sign Up"} />
               </Link>
             </ul>
           </div>
