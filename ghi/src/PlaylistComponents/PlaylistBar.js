@@ -9,7 +9,6 @@ const PlaylistBar = () => {
   const [isError, setIsError] = useState(false);
   const { token } = useToken();
 
-  // Use useEffect to fetch data when component mounts
   useEffect(() => {
     if (!token) return;
 
@@ -17,13 +16,16 @@ const PlaylistBar = () => {
       try {
         setIsError(false);
         setIsLoading(true);
-        const response = await fetch("http://localhost:8000/playlists", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "may-8-pt-groove-genius.mod3projects.com/playlists",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
 
