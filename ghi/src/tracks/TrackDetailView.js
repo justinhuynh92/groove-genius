@@ -8,21 +8,21 @@ function TrackDetailView() {
   const { token, fetchWithToken } = useToken();
 
   useEffect(() => {
-    async function getTrack() {
-      if (token) {
+  async function getTrack() {
+    if (token) {
+      try {
         const response = await fetchWithToken(
           `https://may-8-pt-groove-genius.mod3projects.com/tracks/${id}`
         );
         setTrack(response);
-        console.log(response.genre_names);
-      } else {
-        console.error("An error occured");
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
     }
+  }
 
     getTrack();
-  }, [token, fetchWithToken, id]);
-
+}, [token, id, fetchWithToken]);
   return (
     <div>
       <table className="table table-striped">
@@ -49,7 +49,7 @@ function TrackDetailView() {
             <td>
               <h3>Genre(s)</h3>
             </td>
-            <td>{track.genre_names}</td>
+            <td>{track.genre}</td>
           </tr>
         </tbody>
       </table>

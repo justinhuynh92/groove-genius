@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
+import TrackForm from "./CreateTrackForm";
 
 function TrackDetail() {
   const [tracks, setTracks] = useState([]);
@@ -103,6 +104,7 @@ function TrackDetail() {
           </tbody>
         </table>
       )}
+      <TrackForm/>
     </div>
   );
 }

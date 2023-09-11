@@ -6,19 +6,31 @@ client = TestClient(app)
 
 
 class EmptyTrackQueries:
-    def get_tracks(self):
-        return []
 
+    def get_track_by_id(self, track_id: int):
+        return {
+            "id": 1,
+            "title": "string",
+            "artist": "string",
+            "album": "string",
+            "genre": "ROCK"
+        }
 
-def test_get_all_tracks():
-    app.dependency_overrides[TrackRepository] = EmptyTrackQueries
-    # Arrange
+    def test_get_track_by_id():
+        app.dependency_overrides[TrackRepository] = EmptyTrackQueries
+        # Arrange
 
-    # Act
-    response = client.get("/tracks")
+        # Act
+        response = client.get("/tracks/1")
 
-    app.dependency_overrides = {}
+        app.dependency_overrides = {}
 
-    # Assert
-    assert response.status_code == 200
-    assert response.json() == {"tracks": []}
+        # Assert
+        assert response.status_code == 200
+        assert response.json() == {
+            "id": 1,
+            "title": "string",
+            "artist": "string",
+            "album": "string",
+            "genre": "ROCK"
+        }

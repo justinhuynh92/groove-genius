@@ -12,7 +12,7 @@ function TrackForm() {
     data.title = name;
     data.artist = artist;
     data.album = album;
-    data.genre_id = [genres];
+    data.genre = genres;
 
     const trackUrl = "https://may-8-pt-groove-genius.mod3projects.com/tracks";
     const fetchConfig = {
