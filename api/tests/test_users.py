@@ -6,17 +6,17 @@ client = TestClient(app)
 
 
 class UserRepo:
-    def get_user(self):
-        return {}
+    def get_user(self, userID: int):
+        return None
 
 
 def test_get_users():
     app.dependency_overrides[UserRepository] = UserRepo
-    response = client.get("/users/{id}")
+    response = client.get("/accounts")
     app.dependency_overrides = {}
 
     assert response.status_code == 200
-    assert response.json() == {}
+    assert response.json() is None
 
 
 def test_init():
