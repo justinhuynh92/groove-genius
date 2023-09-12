@@ -12,13 +12,16 @@ const PlaylistDetail = () => {
     if (!token || !id) return;
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/playlists/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `may-8-pt-groove-genius.mod3projects.com/playlists/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
 
