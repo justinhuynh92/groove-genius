@@ -6,9 +6,6 @@ client = TestClient(app)
 
 
 class EmptyPlaylistQueries:
-    def get_playlists(self):
-        return []
-
     def get_playlist(self, id: int):
         return {
             "id": 1,
@@ -31,32 +28,32 @@ class EmptyPlaylistQueries:
             ],
         }
 
+    def test_get_single_playlist():
+        # Override the real dependency with the mock
+        app.dependency_overrides[PlaylistRepository] = EmptyPlaylistQueries
 
-def test_get_all_playlists():
-    app.dependency_overrides[PlaylistRepository] = EmptyPlaylistQueries
+        # Perform the test request
+        response = client.get("/playlists/1")
 
-    response = client.get("/playlists/1")
-
-    app.dependency_overrides = {}
-
-    assert response.status_code == 200
-    assert response.json() == {
-        "id": 1,
-        "name": "string",
-        "tracks": [
-            {
-                "id": 1,
-                "title": "string",
-                "artist": "string",
-                "album": "string",
-                "genre": "ROCK",
-            },
-            {
-                "id": 2,
-                "title": "string",
-                "artist": "string",
-                "album": "string",
-                "genre": "ROCK",
-            },
-        ],
-    }
+        # Assertions to make sure you're getting what you expect
+        assert response.status_code == 200
+        assert response.json() == {
+            "id": 1,
+            "name": "string",
+            "tracks": [
+                {
+                    "id": 1,
+                    "title": "string",
+                    "artist": "string",
+                    "album": "string",
+                    "genre": "ROCK",
+                },
+                {
+                    "id": 2,
+                    "title": "string",
+                    "artist": "string",
+                    "album": "string",
+                    "genre": "ROCK",
+                },
+            ],
+        }
