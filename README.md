@@ -15,16 +15,10 @@ tasks for this week.
 ## Deliverables
 
 - [x] Wire-frame diagrams
-- [ ] API documentation
+- [x] API documentation
 - [x] GitLab issue board is setup and in use
 
 ## Project layout
-
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
 
 ### Directories
 
@@ -240,12 +234,15 @@ pages site.
 - Endpoint path: /playlists
 - Endpoint method: GET
 
-- Response: Response will be the track info and status of request.
+- Headers:
+
+  - Authorization: Bearer token
+
 - Response shape (JSON):
 
 ```json
 {
-  "playlists": {
+  "playlists": [
     {
       "id": id,
       "name": "Mixtape Supreme",
@@ -255,11 +252,8 @@ pages site.
       "id": id,
       "name": "Playlist 2",
       "description": "Like a meal for your soul"
-    },
-  }
-  },
-  {
-    "status": status
+    }
+  ]
   }
 ```
 
@@ -268,54 +262,76 @@ pages site.
 - Endpoint path: /playlists/{id}
 - Endpoint method: GET
 
-- Response: Response will be the track info and status of request.
+- Query parameters:
+
+  - id (int)
+
+- Headers:
+
+  - Authorization: Bearer token
+
 - Response shape (JSON):
+  Returns the playlist with tracks and id.
 
 ```json
 {
-  "name": "Mixtape Supreme",
-  "description": "Like a meal for your soul.",
-  "id": id
-  },
-  {
-    "status": status
-  }
+  "name": "Playlist Demo 1",
+  "tracks": [
+    {
+      "title": "string",
+      "artist": "string",
+      "album": "string",
+      "genre": "string"
+    },
+    {
+      "title": "string",
+      "artist": "Fred",
+      "album": "test",
+      "genre": "rnb"
+    }
+  ],
+  "id": 1
+}
 ```
-
 
 #### Create Playlist
 
 - Endpoint path: /playlists
 - Endpoint method: POST
 
+- Headers:
+
+  - Authorization: Bearer token
+
 - Request shape:
 
 ```json
 {
-  "user_id": user_id,
-  "name": "Mixtape Supreme",
-  "description": "Like a meal for your soul."
+  "name": "Mixtape Supreme"
 }
 ```
 
-- Response: Response will be status and playlist info.
 - Response shape (JSON):
+  Returns the object.
 
-  ```json
-  {
-    "playlist": {
-      "user_id": user_id,
-      "name": "Mixtape Supreme",
-      "description": "Like a meal for your soul.",
-    },
-    "status": status
-  }
-  ```
+```json
+{
+  "name": "Mixtape Supreme"
+}
+```
 
 #### Edit Playlist
 
 - Endpoint path: /playlists/{id}
 - Endpoint method: PUT
+
+- Query parameters:
+
+  - id (int)
+
+- Headers:
+
+  - Authorization: Bearer token
 
 - Request shape:
 
@@ -325,19 +341,29 @@ pages site.
 }
 ```
 
-- Response: Response will be a status indicating whether it was successful or not.
+- Response:
+  Returns the object.
+
+```json
+{
+  "name": "Super Mixtape Supreme"
+}
+```
 
 #### Delete Playlist
+
+- Query parameters:
+
+  - id (int)
 
 - Endpoint path: /playlists/{id}
 - Endpoint method: DELETE
 
-- Response will be the status, since there's nothing to return.
 - Response shape:
 
 ```json
 {
-  "true": true
+  "message": "Playlist deleted."
 }
 ```
 
@@ -352,12 +378,6 @@ pages site.
 
 ```json
 
-{
-  "title": "Jump",
-  "artist": "Van Halen",
-  "genre_id": genre_id,
-  "album": "1984"
-}
 ```
 
 - Response: Response will be the track info and status of request.
@@ -367,12 +387,9 @@ pages site.
 {
   "title": "Jump",
   "artist": "Van Halen",
-  "genre_id": genre_id,
-  "album": "1984"
-  },
-  {
-    "status": status
-  }
+  "album": "1984",
+  "genre": "Rock"
+}
 ```
 
 #### Get Track by ID
@@ -544,7 +561,7 @@ pages site.
 ```json
 {
   "id": 1,
-  "name": "Rock/Pop",
+  "name": "Rock/Pop"
 }
 ```
 
@@ -621,35 +638,5 @@ pages site.
     "genre": "genre",
     "track_id": track_id
     },
-}
-```
-
-#### Get Recommendation
-
-- Endpoint path: /recommendations/{id}
-- Endpoint method: GET
-
-- Response will be the id, genres, track id
-- Response shape:
-
-```json
-{
-  "id": id,
-  "genre": "genre",
-  "track_id": track_id
-}
-```
-
-#### Delete Recommendation
-
-- Endpoint path: /recommendations/{id}
-- Endpoint method: DELETE
-
-- Response will be the status, since there's nothing to return.
-- Response shape:
-
-```json
-{
-  "true": true
 }
 ```
