@@ -33,6 +33,17 @@ async def get_playlists(
     return playlist_repo.get_playlists()
 
 
+@router.put("/playlists/{playlist_id}", response_model=NewPlaylist)
+async def update_playlist(
+    playlist_id: int,
+    playlist: NewPlaylist,
+    playlist_repo: PlaylistRepository = Depends(),
+    account_data=Depends(authenticator.get_current_account_data),
+):
+    id = playlist_repo.update_playlist(playlist_id, playlist)
+    return {"id": id, **playlist.dict()}
+
+
 @router.get(
     "/playlists/{playlist_id}",
     response_model=PlaylistWithTracksOut,

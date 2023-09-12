@@ -37,6 +37,29 @@ class PlaylistRepository:
                 status_code=400, detail="Cannot create playlist."
             )
 
+
+    def update_playlist(self, playlist_id: int, playlist: NewPlaylist) -> int:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+
+                        UPDATE playlists
+                        SET name = %s
+                        WHERE id = %s
+                        RETURNING id;
+
+                        """,
+                        (playlist.name, playlist_id),
+                    )
+                    id = cur.fetchone()[0]
+                    return id
+        except Exception:
+            raise HTTPException(
+                status_code=400, detail="Cannot update playlist."
+            )
+
     def get_playlists(self) -> List[PlaylistOut]:
         try:
             with pool.connection() as conn:
