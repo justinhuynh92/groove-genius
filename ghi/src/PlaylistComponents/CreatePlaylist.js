@@ -12,7 +12,7 @@ const CreatePlaylist = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "may-8-pt-groove-genius.mod3projects.com/playlists",
+        "https://may-8-pt-groove-genius.mod3projects.com/playlists",
         {
           method: "POST",
           headers: {
@@ -38,6 +38,7 @@ const CreatePlaylist = () => {
   };
 
   useEffect(() => {
+    if (!token) return;
     if (playlistCreated) {
       setTimeout(() => {
         setPlaylistCreated(false);

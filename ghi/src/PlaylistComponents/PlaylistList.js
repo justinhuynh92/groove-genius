@@ -12,7 +12,7 @@ const PlaylistList = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "may-8-pt-groove-genius.mod3projects.com/playlists",
+          "https://may-8-pt-groove-genius.mod3projects.com/playlists",
           {
             method: "GET",
             headers: {

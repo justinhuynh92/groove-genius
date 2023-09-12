@@ -17,7 +17,7 @@ const PlaylistBar = () => {
         setIsError(false);
         setIsLoading(true);
         const response = await fetch(
-          "may-8-pt-groove-genius.mod3projects.com/playlists",
+          "https://may-8-pt-groove-genius.mod3projects.com/playlists",
           {
             method: "GET",
             headers: {
