@@ -3,6 +3,8 @@
   border-radius: var(--border-radius);
   padding: 20px;
   box-shadow: 0 0 10px #9ecaed;
+  max-width: 15vw;
+  width: 100%;
 }
 
 .playlist-bar-header {

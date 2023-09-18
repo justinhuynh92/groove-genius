@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Link } from "react-router-dom";
+import "./stylesheets/profile-page.css";
 
 function ProfilePage() {
   const { token, fetchWithToken } = useToken();
@@ -17,29 +18,29 @@ function ProfilePage() {
     getUserData();
   }, [token, fetchWithToken]);
 
-    return (
-        <div className="p-4">
-            <div className="mb-4">
-                <h1 className="text-2xl font-bold">Hello, {username}</h1>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-4">
-                <ul>
-                    <li className="mb-2">
-                        <h2 className="text-lg font-semibold">My Library</h2>
-                    </li>
-                    <li className="list-group-item border bg-light">
-                        <Link to="/genres">Genre</Link>
-                    </li>
-                    <li className="list-group-item border bg-light">
-                        <Link to="/tracks">Tracks</Link>
-                    </li>
-                    <li className="list-group-item border bg-light">
-                        <Link to="/playlists">Playlists</Link>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    )
-};
+  return (
+    <div className="profile-container">
+      <div className="header-section">
+        <h1 className="greeting-text">Hello, {username}</h1>
+      </div>
+      <div className="library-section">
+        <ul className="library-list">
+          <li className="library-item">
+            <h2 className="section-title">My Library</h2>
+          </li>
+          <li className="list-link">
+            <Link to="/genres">Genre</Link>
+          </li>
+          <li className="list-link">
+            <Link to="/tracks">Tracks</Link>
+          </li>
+          <li className="list-link">
+            <Link to="/playlists">Playlists</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 export default ProfilePage;

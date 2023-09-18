@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Everlong(Live)",
+    "artist": "Foo Fighters",
+    "album": "Bootleg",
+    "src": "/songs/everlong.mp3",
+    "art": "/song-art/foo-art.jpg"
+  },
+  {
+    "name": "Under Pressure(Live)",
+    "artist": "Annie Lennox & David Bowie",
+    "album": "Freddie Mercury Tribute Concert",
+    "src": "/songs/under-pressure.mp3",
+    "art": "/song-art/mercury-art.jpg"
+  },
+  {
+    "name": "Aliens Exist (Live)",
+    "artist": "Blink-182",
+    "album": "Bootleg",
+    "src": "/songs/aliens-exist.mp3",
+    "art": "/song-art/blink-art.jpeg"
+  }
+]

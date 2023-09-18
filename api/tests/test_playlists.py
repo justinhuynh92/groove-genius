@@ -29,10 +29,8 @@ class EmptyPlaylistQueries:
         }
 
     def test_get_single_playlist():
-        # Override the real dependency with the mock
         app.dependency_overrides[PlaylistRepository] = EmptyPlaylistQueries
 
-        # Perform the test request
         response = client.get("/playlists/1")
 
         # Assertions to make sure you're getting what you expect

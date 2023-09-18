@@ -1,0 +1,11 @@
+.banner-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 200px; /* Adjust as needed */
+}
+
+.dropdown {
+  margin-left: auto;
+  padding: 20px;
+}

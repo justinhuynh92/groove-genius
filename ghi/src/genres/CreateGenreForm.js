@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GenreList from "./ListOfGenres";
+import "../stylesheets/genre.css";
 
 function GenreForm() {
   const [name, setName] = useState("");

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../stylesheets/genre.css";
 
 function GenreList() {
   const [genre, setGenre] = useState([]);
